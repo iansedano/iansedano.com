@@ -12,7 +12,7 @@
 
 <script>
   import Header from '$components/Header.svelte'
-  import '$lib/styles/style.css'
+  import '$lib/styles/style.scss'
   import '$lib/styles/prism-xonokai.css'
   import { fade } from 'svelte/transition'
 

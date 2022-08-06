@@ -4,7 +4,6 @@ export const GET = async () => {
 		{ eager: true }
 	);
   
-  console.log(allPostFiles)
 	const iterablePostFiles = Object.entries(allPostFiles);
 
 	return {
