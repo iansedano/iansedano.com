@@ -8,7 +8,7 @@ const config = {
 	resolve: {
 		alias: {
 			// these are the aliases and paths to them
-			$components: path.resolve('./src/components')
+			$components: path.resolve('./src/lib/components')
 		}
 	}
 };

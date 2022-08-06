@@ -11,7 +11,9 @@
 		"strict": true,
     "baseUrl": ".",
 		"paths": {
-			"$components/*": ["src/components/*"],
+			"$components/*": ["src/lib/components/*"],
+      "$lib":["src/lib"],
+      "$lib/*":["src/lib/*"]
 		}
 	}
 }
