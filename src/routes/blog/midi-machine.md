@@ -1,14 +1,16 @@
 ---
 layout: post
 title: MIDI for the bridge
-img: https://www.dropbox.com/s/k5ci3r4m2psezka/midi_plug.jpg?raw=1
-date: 2018-07-01
-tags: 
+img: 'https://www.dropbox.com/s/k5ci3r4m2psezka/midi_plug.jpg?raw=1'
+date: 2018-07-01T00:00:00.000Z
+tags:
   - music
   - hardware
   - midi
   - programming
-description: An overview of the MIDI programming done for the "bridge". From the hardware routing to the music theory.
+description: >-
+  An overview of the MIDI programming done for the "bridge". From the hardware
+  routing to the music theory.
 ---
 
 This post will be an overview of the MIDI system I used for The Bridge. It is part of a series. See presentation post [here](/music/2018-12-15-time_machine/).

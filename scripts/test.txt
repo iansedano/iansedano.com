@@ -11,6 +11,7 @@ date: 2020-03-20T00:00:00.000Z
 description: >-
   An example of using the VBA Scripting Dictionary to model data and manage an
   excel spreadsheet, along with some useful devlopment tools.
+testo: Hello
 ---
 
 Unfortunately I am unable to share the complete source of this code due to it being sensitive information.
