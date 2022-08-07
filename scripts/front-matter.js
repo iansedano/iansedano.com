@@ -32,7 +32,9 @@ async function addGroceryItem(name, quantity, price) {
 
 glob('src/routes/blog/*.md', null, function (er, files) {
 	files.forEach(async (file) => {
-		console.log(matter(await readFile(file)).data);
+		console.log(matter(await readFile(file)));
+
+		const frontMatter = matter(await readFile(file).data);
 	});
 });
 
