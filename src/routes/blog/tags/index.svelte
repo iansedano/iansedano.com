@@ -1,13 +1,22 @@
 <script context="module">
 	export const load = async ({ params, fetch }) => {
-		const currentTag = params.tag;
 		const response = await fetch('/api/posts.json');
 		const posts = await response.json();
 
-		const tags = [...posts.reduce((acc, post) => {
-      post.meta.tags.forEach(tag => acc.add(tag))
-      return acc
-    }, new Set())];
+		const tags = 
+			posts.reduce((acc, post) => {
+				if ('tags' in post.meta) {
+          post.meta.tags.forEach((tag) => {
+            if (tag in acc) {
+              acc[tag] += 1
+            } else {
+              acc[tag] = 1
+            }
+          });
+				}
+				return acc;
+			}, {})
+		;
 
 		return {
 			props: {
@@ -17,17 +26,18 @@
 	};
 </script>
 
-<script>
-	export let tags;
+<script lang="ts">
+	export let tags: Object;
 </script>
 
 <ul>
-	{#each tags as tag}
+	{#each Object.entries(tags).sort((a, b) => b[1] - a[1]) as [tag, count]}
 		<li>
 			<h2>
 				<a href="/blog/tags/{tag}">
 					{tag}
 				</a>
+        {count}
 			</h2>
 		</li>
 	{/each}
