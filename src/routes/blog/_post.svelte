@@ -1,7 +1,7 @@
-<script>
-	export let title;
-	export let date;
-	export let tags;
+<script lang=ts>
+	export let title: string;
+	export let date: string;
+	export let tags: string;
 </script>
 
 <svelte:head>
