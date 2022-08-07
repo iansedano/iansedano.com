@@ -12,7 +12,7 @@ const config = defineConfig({
 	remarkPlugins: [],
 	rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
 	layout: {
-		blog: 'src/routes/blog/_post.svelte'
+		post: 'src/routes/blog/_post.svelte'
 	}
 });
 

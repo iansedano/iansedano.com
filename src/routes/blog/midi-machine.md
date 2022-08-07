@@ -1,5 +1,5 @@
 ---
-layout: blog
+layout: post
 title: MIDI for the bridge
 img: https://www.dropbox.com/s/k5ci3r4m2psezka/midi_plug.jpg?raw=1
 date: 2018-07-01

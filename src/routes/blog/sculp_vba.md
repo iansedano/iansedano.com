@@ -2,7 +2,11 @@
 layout: post
 title:  VBA Artworks
 img: https://www.dropbox.com/s/bmdmf4ipcfbhcv5/VBA_square.png?raw=1
-tags: art software vba programming
+tags: 
+  - art
+  - software
+  - vba
+  - programming
 date: 2020-03-20
 description: An example of using the VBA Scripting Dictionary to model data and manage an excel spreadsheet, along with some useful devlopment tools.
 ---
