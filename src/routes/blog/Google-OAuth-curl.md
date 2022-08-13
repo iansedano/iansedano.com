@@ -11,4 +11,5 @@ description: >-
   to download the whole client library just to get your hands on a token, here
   is a minimal cURL script.
 ---
-<script src="https://gist.github.com/iansedano/e0b259ab9c63ebddd22658f697026c19.js"></script>
+
+https://gist.github.com/iansedano/e0b259ab9c63ebddd22658f697026c19.js

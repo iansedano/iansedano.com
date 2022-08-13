@@ -1,76 +1,78 @@
-<input type="checkbox" class="theme-switch" id="theme-switch" />
+<script>
+	import gsap from 'gsap';
+	import { onMount } from 'svelte';
 
-<div id="page">
-	<div class="label">
-		<label for="theme-switch" class="switch-label" />
-	</div>
-</div>
+	gsap.defaults({ ease: 'slow(0.9, 0.7, false)', duration: 0.3 });
 
-<style>
-	:root {
-		--dark-switch-shadow: #fce477;
-		--dark-switch-icon: '🌒';
+	const defaultEmoji = '🌙';
 
-		--light-switch-shadow: #fce477;
-		--light-switch-icon: '☀';
+	onMount(() => {
+		let theme = 'dark'; //default to dark
 
-		/* Default */
-		--switch-icon: var(--dark-switch-icon);
-		--switch-shadow-color: var(--dark-switch-shadow);
+		//local storage is used to override OS theme settings
+		if (
+			localStorage.getItem('theme') &&
+			localStorage.getItem('theme') == 'dark'
+		) {
+			theme = 'dark';
+		} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+			//OS theme setting detected as dark
+			theme = 'dark';
+		}
+
+		//dark theme preferred, set document with a `data-theme` attribute
+		if (theme == 'dark') {
+			document.documentElement.setAttribute('data-theme', 'dark');
+		}
+	});
+
+	function handleClick(e) {
+		const checked = document.getElementById('toggle').checked;
+		const emoji = checked ? '🌙' : '🌞';
+		const theme = checked ? '' : 'light-theme';
+		gsap
+			.timeline()
+			.to(e.target, { y: -2 })
+			.to(e.target, { opacity: 0 })
+			.set(e.target, { attr: { content: emoji } })
+			.set(document.body, { className: theme })
+			.to(e.target, { opacity: 1 })
+			.to(e.target, { y: 0 })
+			.to(e.target, { y: 0 });
 	}
+</script>
 
-	.theme-switch {
-		display: none;
-	}
+<input type="checkbox" class="toggle-input" id="toggle" />
+<label
+	for="toggle"
+	class="toggle-label"
+	content={defaultEmoji}
+	on:click={handleClick}
+/>
 
-	.label {
-		position: relative;
-		display: flex;
-		align-items: center;
-	}
-
-	.switch-label {
-		width: 2.2rem;
-		height: 1rem;
-		display: flex;
-		align-items: center;
-	}
-
-	.switch-label::before,
-	.switch-label::after {
-		content: '';
-		display: block;
+<style lang="scss">
+	input[type='checkbox'] {
+		opacity: 0;
 		position: absolute;
-		cursor: pointer;
-	}
 
-	.switch-label::before {
-		width: 2.2rem;
-		height: 1rem;
-		background-color: #fff;
-		border-radius: 100rem;
-		-webkit-transition: background-color 0.25s ease;
-		transition: background-color 0.25s ease;
-	}
+		+ .toggle-label {
+			cursor: pointer;
+			position: relative;
+			width: 1.5em;
+			top: -0.2em;
+			margin: auto;
 
-	.switch-label::after {
-		left: -0.25rem;
-		content: var(--switch-icon);
-		font-size: 1.5rem;
-		-webkit-transition: left 0.25s ease;
-		transition: left 0.25s ease;
-	}
+			&:before {
+				content: attr(content);
+			}
+		}
 
-	.theme-switch:checked ~ #page .switch-label::before {
-		background: green;
-	}
-
-	.theme-switch:checked ~ #page .switch-label::after {
-		left: 1rem;
-	}
-
-	.theme-switch:checked ~ #page {
-		--switch-shadow-color: var(--light-switch-shadow);
-		--switch-icon: var(--light-switch-icon);
+		&:checked {
+			+ .toggle-label {
+				&:before {
+					content: attr(content);
+				}
+			}
+		}
 	}
 </style>

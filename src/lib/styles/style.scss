@@ -15,7 +15,6 @@
 	--border: #d8dae1;
 	--accent: #0d47a1;
 	--preformatted: #444;
-	--marked: #ffdd33;
 	--disabled: #efefef;
 }
 
@@ -28,6 +27,7 @@
 	--border: #666;
 	--accent: #ffb300;
 	--preformatted: #ccc;
+	--marked: #ffdd33;
 	--disabled: #111;
 
 	/* Add a bit of transparency so light media isn't so glaring in dark mode */
@@ -35,6 +35,10 @@
 	video {
 		opacity: 0.8;
 	}
+}
+
+body {
+	transition: background 1s, color 1s;
 }
 
 /* Reset box-sizing */
@@ -241,11 +245,11 @@ label[type='button']:hover {
 }
 
 /* Format navigation */
-header > nav {
-	font-size: 1rem;
-	line-height: 2;
-	padding: 1rem 0 0 0;
-}
+// header > nav {
+// 	font-size: 1rem;
+// 	line-height: 2;
+// 	padding: 1rem 0 0 0;
+// }
 
 /* Use flexbox to allow items to wrap, as needed */
 header > nav ul,
