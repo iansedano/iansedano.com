@@ -4,6 +4,9 @@
 * license: MIT; http://moox.mit-license.org/
 */
 
+/* --code: #d81b60;
+--code: #f06292; */
+
 @font-face {
   font-family: CascadiaCode;
   src: url('$lib/fonts/CascadiaMono.woff2') format('woff2');

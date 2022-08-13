@@ -3,21 +3,19 @@
 		const response = await fetch('/api/posts.json');
 		const posts = await response.json();
 
-		const tags = 
-			posts.reduce((acc, post) => {
-				if ('tags' in post.meta) {
-          post.meta.tags.forEach((tag) => {
-            if (tag in acc) {
-              acc[tag] += 1
-            } else {
-              acc[tag] = 1
-            }
-          });
-				}
-				return acc;
-			}, {})
-		;
-
+		// Create count of unique tags
+		const tags = posts.reduce((acc, post) => {
+			if ('tags' in post.meta) {
+				post.meta.tags.forEach((tag) => {
+					if (tag in acc) {
+						acc[tag] += 1;
+					} else {
+						acc[tag] = 1;
+					}
+				});
+			}
+			return acc;
+		}, {});
 		return {
 			props: {
 				tags: tags
@@ -37,7 +35,7 @@
 				<a href="/blog/tags/{tag}">
 					{tag}
 				</a>
-        {count}
+				{count}
 			</h2>
 		</li>
 	{/each}

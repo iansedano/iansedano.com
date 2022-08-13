@@ -1,36 +1,34 @@
-<header>
-  <a href="/">Home</a>
+<script>
+	import DarkModeToggle from '$components/DarkModeToggle.svelte';
+</script>
 
-  <nav>
-    <ul>
-      <li>
-        <a href="/blog">Blog</a>
-      </li>
-      <li>
-        <a href="/projects">Projects</a>
-      </li>
-    </ul>
-  </nav>
+<header>
+	<nav>
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><a href="/blog">Blog</a></li>
+			<li><a href="/projects">Projects</a></li>
+			<li>
+				<DarkModeToggle />
+			</li>
+		</ul>
+	</nav>
 </header>
 
 <style>
-  header {
-    padding: 1rem;
-    background: lightskyblue;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  ul {
-    margin: 0;
-    list-style-type: none;
-    display: flex;
-    gap: 1rem;
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  </style>
+	input[type='checkbox'] {
+		appearance: none;
+		margin: 0;
+		font: inherit;
+		color: currentColor;
+		width: 1.15em;
+		height: 1.15em;
+		border: 0.15em solid currentColor;
+		border-radius: 0.2em;
+		transform: translateY(-0.075em);
+	}
+
+	.moon {
+		fill: var(--accent);
+	}
+</style>

@@ -13,6 +13,10 @@
 
 <script>
 	export let posts;
+
+	function formatDate(dateString) {
+		return new Intl.DateTimeFormat('en-UK').format(new Date(dateString));
+	}
 </script>
 
 <ul>
@@ -23,7 +27,22 @@
 					{post.meta.title}
 				</a>
 			</h2>
-			Published {post.meta.date}
+			{formatDate(post.meta.date)}
 		</li>
 	{/each}
 </ul>
+
+<style lang="scss">
+	ul {
+		padding-left: 0;
+		li {
+			list-style-type: none;
+			h2 {
+				font-size: 1.5rem;
+				a {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+</style>

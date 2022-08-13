@@ -1,4 +1,2 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-
-<!-- https://joshcollinsworth.com/blog/build-static-sveltekit-markdown-blog -->
+<h1>Hi, I'm Ian Currie</h1>
+<p>You may see me around as <code>iansedano</code></p>

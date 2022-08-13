@@ -2,12 +2,6 @@ export async function GET({ params }) {
 	const currentTag = params.tag;
 	console.log(currentTag);
 
-	// return {
-	// 	status: 200,
-	// 	headers: {},
-	// 	body: { posts }
-	// };
-
 	const allPostFiles = import.meta.glob('../*.md', { eager: true });
 
 	const posts = Object.entries(allPostFiles)
