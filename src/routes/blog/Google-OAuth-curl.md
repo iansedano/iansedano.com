@@ -1,6 +1,6 @@
 ---
 layout: post
-title: cURL script to obtain tokens with Google OAuth flow
+title: curl Script to Get Google OAuth Tokens
 date: 2021-08-18T00:00:00.000Z
 tags:
   - google-apis
@@ -12,4 +12,36 @@ description: >-
   is a minimal cURL script.
 ---
 
-https://gist.github.com/iansedano/e0b259ab9c63ebddd22658f697026c19.js
+While the Google client libraries that wrap the OAuth functinality are great, sometimes you want something a bit more basic.
+
+(This snippet is fetched from a [GitHub Gist](https://gist.github.com/iansedano/e0b259ab9c63ebddd22658f697026c19))
+
+<script>
+	
+	import { onMount } from "svelte"
+	
+	onMount(async () => {
+		const json = await fetch(
+				"https://api.github.com/gists/e0b259ab9c63ebddd22658f697026c19"
+			)
+			.then(resp => resp.json())
+			
+		const pre = document.createElement("pre")
+		const code = document.createElement("code")
+		
+		
+		code.innerText = json.files["get_token.sh"].content
+		pre.appendChild(code)
+		
+		
+		document.querySelector("main").appendChild(pre)
+	})
+	
+	
+</script>
+
+<style>
+	code {
+		font-size: 0.5em;
+	}
+</style>

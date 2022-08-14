@@ -19,6 +19,8 @@
 	}
 </script>
 
+<a href="/blog/tags">Browse tags</a>
+
 <ul>
 	{#each posts as post}
 		<li>

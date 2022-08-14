@@ -23,6 +23,10 @@ code {
   font-family: CascadiaCode, Menlo, Monaco, "Courier New", monospace;
 }
 
+code {
+	font-size: var(--code-font-size);
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
 	-moz-tab-size: 2;
@@ -35,13 +39,13 @@ pre[class*="language-"] {
 	white-space: pre;
 	white-space: pre-wrap;
 	word-wrap: normal;
-	font-size: 14px;
+	font-size: var(--code-font-size);
 	color: #76d9e6;
 	text-shadow: none;
 }
 
 pre > code[class*="language-"] {
-	font-size: 1em;
+	font-size: var(--code-font-size);
 }
 
 pre[class*="language-"],
