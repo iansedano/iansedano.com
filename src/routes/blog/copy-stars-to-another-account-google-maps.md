@@ -1,7 +1,7 @@
 ---
 layout: post
 date: 2021-02-02T00:00:00.000Z
-title: Importing Stars to Google Maps
+title: Export and Import Google Maps Stars Between Accounts
 tags:
   - google
   - puppeteer
@@ -34,25 +34,25 @@ Within the "features" array were all my stars in this format:
 
 ```json
 {
- "geometry" : {
-  "coordinates" : [ 2.1850920, 41.3917170 ],
-  "type" : "Point"
- },
- "properties" : {
-  "Google Maps URL" : "http://maps.google.com/?cid=15138001108724662971",
-  "Location" : {
-   "Address" : "Carrer de Buenaventura Muñoz, 24, 08018 Barcelona, Spain",
-   "Business Name" : "Clínica Veterinària Ciutadella",
-   "Geo Coordinates" : {
-    "Latitude" : "41.3917170",
-    "Longitude" : "2.1850920"
-   }
-  },
-  "Published" : "2019-10-21T09:26:01Z",
-  "Title" : "Clinica Veterinaria Ciutadella",
-  "Updated" : "2019-10-21T09:26:01Z"
- },
- "type" : "Feature"
+	"geometry": {
+		"coordinates": [2.185092, 41.391717],
+		"type": "Point"
+	},
+	"properties": {
+		"Google Maps URL": "http://maps.google.com/?cid=15138001108724662971",
+		"Location": {
+			"Address": "Carrer de Buenaventura Muñoz, 24, 08018 Barcelona, Spain",
+			"Business Name": "Clínica Veterinària Ciutadella",
+			"Geo Coordinates": {
+				"Latitude": "41.3917170",
+				"Longitude": "2.1850920"
+			}
+		},
+		"Published": "2019-10-21T09:26:01Z",
+		"Title": "Clinica Veterinaria Ciutadella",
+		"Updated": "2019-10-21T09:26:01Z"
+	},
+	"type": "Feature"
 }
 ```
 
@@ -62,21 +62,20 @@ Once you have this JSON file, you can move onto the Puppeteer section of this pr
 
 ### Automated Import Overview
 
+If you are following along, these are the steps that you'll need to follow.
+
 1. Install required software.
 1. Set up browser log in.
 1. Test the script (because Google is prone to change its HTML and CSS structure).
 1. Run script.
 
-Credits:
-
-- [Jared Potter](https://medium.com/@jaredpotter1/connecting-puppeteer-to-existing-chrome-window-8a10828149e0) - for how to work around logging in with the automated session.
-- [Benji Bee](https://gist.github.com/benjibee/37e0031a8aa7a25e9814a01bdb03217c) - for the puppeteer script that this article's one was adapted from.
+Thaks to [Jared Potter](https://medium.com/@jaredpotter1/connecting-puppeteer-to-existing-chrome-window-8a10828149e0), for how to work around Google's requirement to log in manually with an automated session. Also thanks to [Benji Bee](https://gist.github.com/benjibee/37e0031a8aa7a25e9814a01bdb03217c) for the puppeteer script.
 
 ### Install Required Software
 
 Many of these steps are system specific, what follows are instructions for Windows 10 with powershell.
 
-Install [node]([https://nodejs.org/en/](https://nodejs.org/en/)) and npm (should be installed automatically with node), if you haven't got them.
+Make sure you've installed [node](<[https://nodejs.org/en/](https://nodejs.org/en/)>).
 
 Go into or create the folder where this project is going to run from. It can be any folder, you will be making a new one there:
 
@@ -121,16 +120,17 @@ ws://127.0.0.1:9222/devtools/browser/ca080c01-8152-4bf2-84e0-927cf7af9956
 Now you can connect your script to this very same browser session:
 
 ```javascript
-const wsChromeEndpointurl = 'ws://127.0.0.1:9222/devtools/browser/ca080c01-8152-4bf2-84e0-927cf7af9956';
+const wsChromeEndpointurl =
+	'ws://127.0.0.1:9222/devtools/browser/ca080c01-8152-4bf2-84e0-927cf7af9956';
 const browser = await puppeteer.connect({
-    browserWSEndpoint: wsChromeEndpointurl,
+	browserWSEndpoint: wsChromeEndpointurl
 });
 ```
 
 Now, instead of managing logins and possible captchas in the script, you can just log in normally to the Google account you want to import your stars to, and then run the script. The script will connect itself to the same browser session and will not need to login.
 
 ### The script
-  
+
 ```javascript
 /**
  * Based on:
@@ -145,59 +145,51 @@ const jsonFile = fs.readFileSync(__dirname + '\\Saved Places.json');
 const jsonData = JSON.parse(jsonFile);
 
 const wsChromeEndpointurl =
- 'ws://127.0.0.1:9222/devtools/browser/ca080c01-8152-4bf2-84e0-927cf7af9956';
+	'ws://127.0.0.1:9222/devtools/browser/ca080c01-8152-4bf2-84e0-927cf7af9956';
 
 let scrape = async () => {
+	const browser = await puppeteer.connect({
+		browserWSEndpoint: wsChromeEndpointurl
+	});
 
-    const browser = await puppeteer.connect({
-        browserWSEndpoint: wsChromeEndpointurl,
-    });
+	const page = await browser.newPage();
+	await page.goto('http://maps.google.com/', { waitUntil: 'networkidle2' });
 
-    const page = await browser.newPage();
-    await page.goto('http://maps.google.com/', {waitUntil: 'networkidle2'});
+	for (let index in jsonData.features) {
+		let place = jsonData.features[index].properties['Google Maps URL'];
+		let name = jsonData.features[index].properties['Location']['Business Name'];
 
-    for (let index in jsonData.features) {
+		await page.goto(place, { waitUntil: 'networkidle2' });
+		await page.evaluate(() => {
+			if (
+				document.querySelectorAll(
+					"[src='//maps.gstatic.com/consumer/companion/starred_list_1x.png']"
+				).length == 0
+			) {
+				document.querySelectorAll("[aria-label^='Save']")[0].click();
+				window.setTimeout(function () {
+					document.querySelectorAll("[data-index='2']")[0].click();
+				}, 50);
 
-        let place = jsonData
-                    .features[index]
-                    .properties["Google Maps URL"];
-        let name = jsonData
-                    .features[index]
-                    .properties["Location"]["Business Name"];
+				console.log('Added "' + name + '" to your starred places!');
+			} else {
+				console.log('Skipping "' + name + '" as it was already starred…');
+			}
+			return;
+		});
 
-        await page.goto(place, {waitUntil: 'networkidle2'});
-        await page.evaluate(() => {
-
-            if (document.querySelectorAll(
-                 "[src='//maps.gstatic.com/consumer/companion/starred_list_1x.png']"
-                 )
-                .length == 0) {
-
-                document.querySelectorAll("[aria-label^='Save']")[0].click();
-                window.setTimeout(function(){
-                    document.querySelectorAll("[data-index='2']")[0].click();
-                }, 50);
-
-                console.log('Added "' + name + '" to your starred places!');
-
-            } else {
-                console.log(
-                    'Skipping "' + name + '" as it was already starred…'
-                    );
-            }
-            return;
-        });
-
-        await page.waitFor(200)
-    }
-    // uncomment if you want the browser to close after its done
-    // browser.close(); 
-    return;
+		await page.waitFor(200);
+	}
+	// uncomment if you want the browser to close after its done
+	// browser.close();
+	return;
 };
 
-scrape().then((value) => {
-    console.log('All done!');
-}).catch(e => console.log(e));
+scrape()
+	.then((value) => {
+		console.log('All done!');
+	})
+	.catch((e) => console.log(e));
 ```
 
 Its a good idea to test the script with a few stars before leaving it to its devices. In particular, you may need to fiddle and dig around with the CSS selectors in this section:

@@ -7,40 +7,28 @@ tags:
   - picker-api
   - drive-api
 description: >-
-  (StackOverflow Answer) The Google Picker API is quite powerful but there is
+  The Google Picker API is quite powerful but there is
   not much documentation on it. In this example the Picker is used to get a file
   ID and then make a Drive API call from the front-end with the same auth
   client, to get a blob.
 ---
 
-### You'll need the Drive API
+The Google Picker API is a JavaScript library to open, get information and upload files to Google Drive. This is a way to get a file blob from Google Drive to use in your JavaScript.
 
-From your question it seems that you are trying to do everything with Google Picker. However, the picker will only get you limited metadata for the files, so you can open them with your account (i.e. see them in another window) or let you upload files. If you want to _download_ the actual file, then you will need to use the Drive API.
+The picker will only get you limited metadata for the files, so you can open them with your account (i.e. see them in another window) or let you upload files. If you want to _download_ the actual file, then you'll need to use the Drive API.
 
-[Drive Quickstart for browser JavaScript](https://developers.google.com/drive/api/v3/quickstart/js)
+The flow would be:
 
-The flow might be:
+- Let user pick file
+- Get metadata object
+- Extract file id from object
+- Make a [`GET`](https://developers.google.com/drive/api/v3/reference/files/get) call to the Google Drive API with the `alt='media'` attribute set.
 
-- let user pick file
-- get metadata object
-- extract file id from object
-- make a call to Drive API ([`get`](https://developers.google.com/drive/api/v3/reference/files/get) with `alt='media'`)
-
-If I have misunderstood and you are already using the Drive API, then it would be helpful to see the associated code with that.
-
-### Ref
-
-- [Quickstart](https://developers.google.com/drive/api/v3/quickstart/js)
-- [`get`](https://developers.google.com/drive/api/v3/reference/files/get)
-- [`export`](https://developers.google.com/drive/api/v3/reference/files/export))
-
-# EDIT:
-
-Here is an example of using the Picker API to feed into the Drive API with `gapi` using the same login client.
-
-HTML
+Here is an example of that flow using the Picker API to feed into the Drive API with `gapi`, using the same login client.
 
 ```html
+<!-- index.html -->
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -64,9 +52,9 @@ HTML
 </html>
 ```
 
-JS
-
 ```js
+// script.js
+
 const API_KEY = 'AI...';
 const CLIENT_ID = '44...';
 const appId = "44...";
@@ -156,14 +144,13 @@ function getFile(pickerResp) {
     .then(resp => {
       console.log("fetch response", resp.status)
       let binary = resp.body
-	  // EDIT - addition from Gabrielle vvvv
+
 	  let l = binary.length
-      let array = new Uint8Array(l);
-      for (var i = 0; i<l; i++){
-		array[i] = binary,charCodeAt(i);
+    let array = new Uint8Array(l);
+    for (var i = 0; i<l; i++){
+			array[i] = binary,charCodeAt(i);
 	  }
       let blob = new Blob([array], {type: 'application/octet-stream'});
-      // EDIT - addition from Gabrielle ^^^^
 }
 ```
 

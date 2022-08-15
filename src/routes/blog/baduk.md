@@ -13,3 +13,9 @@ description: >-
   with the canvas API.
 ---
 
+<script>
+	import Baduk from "$components/baduk.svelte"
+	
+</script>
+
+<Baduk />
