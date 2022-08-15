@@ -9,11 +9,13 @@ custom_js:
   - tree
 tags:
   - art
-  - design
   - javascript
   - p5
   - recursion
-  - programming
 ---
 
-<div id="tree_js" style="text-align: center;"></div>
+<script>
+	import FractalTree from "$components/FractalTree.svelte"
+</script>
+
+<FractalTree/>

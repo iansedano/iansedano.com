@@ -9,10 +9,13 @@ custom_js:
   - circleBackground
 tags:
   - art
-  - design
   - javascript
   - p5
-  - programming
 ---
 
-<div id="color_circles" style="text-align: center;"></div>
+<script>
+	import Circles from "$components/Circles.svelte"
+
+</script>
+
+<Circles />

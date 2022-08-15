@@ -8,11 +8,9 @@ custom_js:
   - p5
   - bouncingBall
 tags:
-  - art
   - design
   - javascript
-  - p5
-  - programming
+  - canvas
 ---
 
 <div id="bouncing_balls" style="text-align: center;"></div>
