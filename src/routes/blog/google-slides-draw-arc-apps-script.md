@@ -9,7 +9,7 @@ tags:
   - canvas
   - javascript
 description: >-
-  (StackOverflow Answer) It would appear that you can manually increase the
+  It would appear that you can manually increase the
   length of an arc in Google Slides, but doing it via the API or Apps Script is
   not possible. In this answer I prove this and offer a workaround to creating
   custom length arcs using a pop up and the Canvas API.
@@ -17,15 +17,13 @@ description: >-
 
 In Google Slides, you can manually create circle segments, or arcs, but there doesn't seem to be a corresponding way to create them programatically with the [Slides API](https://developers.google.com/slides/api) or with a ready-made [Apps Script](https://developers.google.com/apps-script) method.
 
-If more circle and arc drawing methods is something you are interested in seeing, there is an existing [feature request](https://issuetracker.google.com/issues/new?component=191598&template=823918). Go and add a ⭐ to it.
-
-In this case, the user wanted to programatically create circular progress bars to generate Slides.
+I answered a StackOverflow question about this topic, and this article is adapted from the answer I gave.
 
 ## Searching the Slides API
 
-I started by manually drawing an arc and then examining all the potential attribues of the [`Shape`](https://developers.google.com/apps-script/reference/slides/shape) class from [`SlidesApp`](https://developers.google.com/apps-script/reference/slides/slides-app). None seemed to refer to the arc sweep, though.
+You could start by manually drawing an arc and then examining all the potential attribues of the [`Shape`](https://developers.google.com/apps-script/reference/slides/shape) class from [`SlidesApp`](https://developers.google.com/apps-script/reference/slides/slides-app). None seem to refer to the arc sweep, though.
 
-The next step was getting a full JSON representation of the arc and the slide with the Slides API [page GET request](https://developers.google.com/slides/reference/rest/v1/presentations.pages/get). Which at most yielded these attributes:
+The next step would be getting a full JSON representation of the arc and the slide with the Slides API [page GET request](https://developers.google.com/slides/reference/rest/v1/presentations.pages/get). Which at most yielded these attributes:
 
 ```json
 {
@@ -60,7 +58,9 @@ The next step was getting a full JSON representation of the arc and the slide wi
 }
 ```
 
-I changed the sweep of the arc manually, put the two versions through a [diff](https://en.wikipedia.org/wiki/Diff), and there was no change in any of the attributes except for the `revisionId`.
+Even changing the sweep of the arc manually and putting the two versions through a [diff](https://en.wikipedia.org/wiki/Diff) will yield no changes except for the `revisionId`.
+
+If more native circle and arc drawing methods is something you are interested in seeing, there is an existing [feature request](https://issuetracker.google.com/issues/new?component=191598&template=823918). Go and add a ⭐ to it.
 
 ## Workarounds
 
@@ -68,9 +68,9 @@ The simplest way to create custom progress bars would be to keep static images o
 
 Alternatively, there is a slightly more complex method using the canvas API. Since you can load HTML and JavaScript in a sidebar with [`getUi`](<https://developers.google.com/apps-script/reference/slides/slides-app?hl=en#getUi()>), that means you can use the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API). Since you can use the Canvas API, that means you can create any shape you want, and create an image from it.
 
-### Code.gs
-
 ```js
+// code.gs
+
 function test() {
 	// This creates the HTML output from the file arc-creator.html
 	let html = HtmlService.createHtmlOutputFromFile('arc-creator');
@@ -90,9 +90,9 @@ function addToPresentation(dataURL) {
 }
 ```
 
-### arc-creator.html
-
 ```html
+<!-- arc-creator.html -->
+
 <!DOCTYPE html>
 <html>
 	<head>

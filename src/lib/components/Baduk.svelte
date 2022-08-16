@@ -24,53 +24,58 @@
 			}
 		}
 
+		class BoardPosition {
+			constructor(bx, by) {
+				this.bx = bx;
+				this.by = by;
+				this._state = 'empty';
+			}
+
+			set state(string) {
+				if (string === 'black' || string === 'white' || string === 'empty') {
+					this._state = string;
+				} else {
+					console.log('invalid state');
+				}
+			}
+
+			get state() {
+				return this._state;
+			}
+		}
+
 		class Group {
 			constructor() {
 				this.positions = [];
 				this.liberties = 0;
 			}
 
-			buildFrom(position, checkedList) {
-				// adds position to list of positions within this group
+			build(position, checkedList) {
 				this.positions.push(position);
 
-				// some definitions for readability
 				this.colour = position.state;
-				if (this.colour == 'white') {
-					this.enemy = 'black';
+				this.enemy = this.colour === 'white' ? 'black' : 'white';
+
+				const groupMembersToCheck = [position];
+
+				while (groupMembersToCheck.length !== 0) {
+					this.getCardinals(groupMembersToCheck.pop())
+						.filter((cardinal) => {
+							return cardinal !== 'edge' && !this.isPosInGroup(cardinal);
+						})
+						.forEach((cardinal) => {
+							if (cardinal.state == 'empty') {
+								this.liberties += 1;
+								checkedList[cardinal.bx][cardinal.by] = cardinal;
+							} else if (cardinal.state == this.colour) {
+								this.positions.push(cardinal);
+								groupMembersToCheck.push(cardinal);
+								checkedList[cardinal.bx][cardinal.by] = cardinal;
+							}
+						});
 				}
-				if (this.colour == 'black') {
-					this.enemy = 'white';
-				}
 
-				// initalizing list of 'friends' that make up this group
-				// and adding in current position.
-				var friendsToCheck = [position];
-
-				// going through the friends
-				for (i = 0; i < friendsToCheck.length; i++) {
-					// getting the adjacent positions
-					var cardinals = this.getCardinals(friendsToCheck[i]);
-					// above outputs a list of 4 positions or "edge"
-
-					const cardinalStates = cardinals.map((i) => i.state);
-
-					// following ignores edge or enemy
-					// if empty adds liberty and to checked list
-					// if friend adds to friends to check and checked list and group positions
-					for (j = 0; j < 4; j++) {
-						if (cardinals[j] == 'edge' || this.isPosInGroup(cardinals[j])) {
-							continue;
-						} else if (cardinalStates[j] == 'empty') {
-							this.liberties += 1;
-							checkedList[cardinals[j].bx][cardinals[j].by] = cardinals[j];
-						} else if (cardinalStates[j] == this.colour) {
-							this.positions.push(cardinals[j]);
-							friendsToCheck.push(cardinals[j]);
-							checkedList[cardinals[j].bx][cardinals[j].by] = cardinals[j];
-						}
-					}
-				}
+				return checkedList;
 			}
 
 			isPosInGroup(pos) {
@@ -124,26 +129,6 @@
 			}
 		}
 
-		class BoardPosition {
-			constructor(bx, by) {
-				this.bx = bx;
-				this.by = by;
-				this._state = 'empty';
-			}
-
-			set state(string) {
-				if (string === 'black' || string === 'white' || string === 'empty') {
-					this._state = string;
-				} else {
-					console.log('invalid state');
-				}
-			}
-
-			get state() {
-				return this._state;
-			}
-		}
-
 		const CANVAS = document.getElementById('canvas');
 		const CTX = CANVAS.getContext('2d');
 
@@ -157,7 +142,6 @@
 		const PLAYER_BLACK = new Player('black');
 		const PLAYER_WHITE = new Player('white');
 
-		const CLICK_MAP_ARRAY = createClickMap();
 		var BOARD = new Array(GRID_SIZE);
 		for (var i = 0; i < GRID_SIZE; i++) {
 			BOARD[i] = new Array(GRID_SIZE);
@@ -170,7 +154,7 @@
 		}
 
 		drawBoard(PADDING, GRID_SPACING, CTX);
-
+		const CLICK_MAP_ARRAY = createClickMap();
 		CANVAS.addEventListener('mousedown', function (e) {
 			let bRef = getBoardRef(getCursorPosition(CANVAS, e), CLICK_MAP_ARRAY);
 
@@ -181,44 +165,6 @@
 				DrawStones(BOARD, CTX);
 			}
 		});
-
-		// ++++++++++++++++++++++++++++++++++
-		// ++++++++ TESTING SET UPS +++++++++
-		// ++++++++++++++++++++++++++++++++++
-
-		/* SIMPLE CAPTURE SETUP
-
-playerTurn = "white";
-board[1][2].state = "white"
-board[2][3].state = "white"
-board[3][2].state = "white"
-board[2][2].state = "black"
-DrawStones(board, ctx)
-*/
-
-		// simple group capture setup
-
-		PLAYER_TURN = 'white';
-		BOARD[1][2].state = 'white';
-		BOARD[2][3].state = 'white';
-		BOARD[3][2].state = 'white';
-		BOARD[2][2].state = 'black';
-		BOARD[2][1].state = 'black';
-		BOARD[1][1].state = 'white';
-		BOARD[3][1].state = 'white';
-		DrawStones(BOARD, CTX);
-
-		/* NEAR KO SETUP
-playerTurn = "black";
-board[1][2].state = "white"
-board[2][3].state = "white"
-board[3][2].state = "white"
-board[2][1].state = "white"
-board[1][1].state = "black"
-board[2][0].state = "black"
-board[3][1].state = "black"
-DrawStones(board, ctx)
-*/
 
 		function findCoordinate(pos) {
 			var x = PADDING + pos.bx * GRID_SPACING;
@@ -321,7 +267,7 @@ DrawStones(board, ctx)
 		function buildGroups() {
 			const groups = [];
 			// making blank board to track checking
-			var checked = new Array(GRID_SIZE);
+			let checked = new Array(GRID_SIZE);
 			for (let i = 0; i < GRID_SIZE; i++) {
 				checked[i] = new Array(GRID_SIZE);
 			}
@@ -342,7 +288,7 @@ DrawStones(board, ctx)
 						checked[i][j] = posBeingChecked;
 						if (posBeingChecked.state != 'empty') {
 							let newGroup = new Group(); // initalizing new group
-							newGroup.buildFrom(posBeingChecked, checked); // building group
+							checked = newGroup.build(posBeingChecked, checked);
 							groups.push(newGroup); // adding to group list
 						}
 					}
@@ -461,6 +407,42 @@ DrawStones(board, ctx)
 				}
 			}
 		}
+
+		// ++++++++++++++++++++++++++++++++++
+		// ++++++++ TESTING SET UPS +++++++++
+		// ++++++++++++++++++++++++++++++++++
+
+		// SIMPLE CAPTURE SETUP
+
+		// playerTurn = "white";
+		// board[1][2].state = "white"
+		// board[2][3].state = "white"
+		// board[3][2].state = "white"
+		// board[2][2].state = "black"
+		// DrawStones(board, ctx)
+
+		// simple group capture setup
+
+		// PLAYER_TURN = 'white';
+		// BOARD[1][2].state = 'white';
+		// BOARD[2][3].state = 'white';
+		// BOARD[3][2].state = 'white';
+		// BOARD[2][2].state = 'black';
+		// BOARD[2][1].state = 'black';
+		// BOARD[1][1].state = 'white';
+		// BOARD[3][1].state = 'white';
+		// DrawStones(BOARD, CTX);
+
+		// NEAR KO SETUP
+		PLAYER_TURN = 'black';
+		BOARD[1][2].state = 'white';
+		BOARD[2][3].state = 'white';
+		BOARD[3][2].state = 'white';
+		BOARD[2][1].state = 'white';
+		BOARD[1][1].state = 'black';
+		BOARD[2][0].state = 'black';
+		BOARD[3][1].state = 'black';
+		DrawStones(BOARD, CTX);
 	});
 </script>
 
