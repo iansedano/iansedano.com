@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import Board from './Baduk/Board';
 
 	onMount(() => {
 		class Player {
@@ -24,116 +25,11 @@
 			}
 		}
 
-		class BoardPosition {
-			constructor(bx, by) {
-				this.bx = bx;
-				this.by = by;
-				this._state = 'empty';
-			}
-
-			set state(string) {
-				if (string === 'black' || string === 'white' || string === 'empty') {
-					this._state = string;
-				} else {
-					console.log('invalid state');
-				}
-			}
-
-			get state() {
-				return this._state;
-			}
-		}
-
-		class Group {
-			constructor() {
-				this.positions = [];
-				this.liberties = 0;
-			}
-
-			build(position, checkedList) {
-				this.positions.push(position);
-
-				this.colour = position.state;
-				this.enemy = this.colour === 'white' ? 'black' : 'white';
-
-				const groupMembersToCheck = [position];
-
-				while (groupMembersToCheck.length !== 0) {
-					this.getCardinals(groupMembersToCheck.pop())
-						.filter((cardinal) => {
-							return cardinal !== 'edge' && !this.isPosInGroup(cardinal);
-						})
-						.forEach((cardinal) => {
-							if (cardinal.state == 'empty') {
-								this.liberties += 1;
-								checkedList[cardinal.bx][cardinal.by] = cardinal;
-							} else if (cardinal.state == this.colour) {
-								this.positions.push(cardinal);
-								groupMembersToCheck.push(cardinal);
-								checkedList[cardinal.bx][cardinal.by] = cardinal;
-							}
-						});
-				}
-
-				return checkedList;
-			}
-
-			isPosInGroup(pos) {
-				const groupPosIndex = this.positions.findIndex((p) => p == pos);
-				if (groupPosIndex == -1) {
-					return false;
-				} else if (groupPosIndex > -1) {
-					return true;
-				}
-			}
-
-			getCardinals(position) {
-				// initalizing cardinals
-				let N;
-				let E;
-				let S;
-				let W;
-
-				// for readability
-				let bx = position.bx;
-				let by = position.by;
-
-				// checking for edges
-				if (bx == 0) {
-					W = 'edge';
-				} else if (bx == GRID_SIZE - 1) {
-					E = 'edge';
-				}
-
-				if (by == GRID_SIZE - 1) {
-					S = 'edge';
-				} else if (by == 0) {
-					N = 'edge';
-				}
-
-				// assigning positions if not edge
-				if (N != 'edge') {
-					N = BOARD[bx][by - 1];
-				}
-				if (E != 'edge') {
-					E = BOARD[bx + 1][by];
-				}
-				if (S != 'edge') {
-					S = BOARD[bx][by + 1];
-				}
-				if (W != 'edge') {
-					W = BOARD[bx - 1][by];
-				}
-
-				return [N, E, S, W];
-			}
-		}
-
 		const CANVAS = document.getElementById('canvas');
 		const CTX = CANVAS.getContext('2d');
 
 		// SETS SIZE FOR GRID AND GAME - only works for 9 x 9 for now.
-		const GRID_SIZE = 9;
+		const BOARD_SIZE = 9;
 		const PADDING = 48.5;
 		const GRID_SPACING = 50;
 		const BOX_SIZE = 30;
@@ -142,18 +38,9 @@
 		const PLAYER_BLACK = new Player('black');
 		const PLAYER_WHITE = new Player('white');
 
-		var BOARD = new Array(GRID_SIZE);
-		for (var i = 0; i < GRID_SIZE; i++) {
-			BOARD[i] = new Array(GRID_SIZE);
-		}
+		const BOARD = new Board(BOARD_SIZE);
 
-		for (i = 0; i < GRID_SIZE; i++) {
-			for (var j = 0; j < GRID_SIZE; j++) {
-				BOARD[i][j] = new BoardPosition(i, j);
-			}
-		}
-
-		drawBoard(PADDING, GRID_SPACING, CTX);
+		drawBoard(BOARD_SIZE, PADDING, GRID_SPACING, CTX);
 		const CLICK_MAP_ARRAY = createClickMap();
 		CANVAS.addEventListener('mousedown', function (e) {
 			let bRef = getBoardRef(getCursorPosition(CANVAS, e), CLICK_MAP_ARRAY);
@@ -161,8 +48,8 @@
 			if (bRef != undefined) {
 				let currentPlayer = getPlayer();
 				move(bRef, currentPlayer);
-				drawBoard(PADDING, GRID_SPACING, CTX);
-				DrawStones(BOARD, CTX);
+				drawBoard(BOARD_SIZE, PADDING, GRID_SPACING, CTX);
+				drawStones(BOARD, CTX);
 			}
 		});
 
@@ -197,7 +84,7 @@
 			} else {
 				currentPosition.state = PLAYER_TURN;
 
-				const groups = buildGroups();
+				const groups = BOARD.buildGroups();
 
 				//which group is the current move in?
 				var currentGroup = findGroupByPosition(currentPosition, groups);
@@ -222,14 +109,6 @@
 				pos.state = 'empty';
 				playerKilling.prisoners += 1;
 			});
-		}
-
-		function isGroupAlive(group) {
-			if (group.liberties == 0) {
-				return false;
-			} else if (group.liberties > 0) {
-				return true;
-			}
 		}
 
 		/** */
@@ -264,42 +143,9 @@
 		}
 
 		/** */
-		function buildGroups() {
-			const groups = [];
-			// making blank board to track checking
-			let checked = new Array(GRID_SIZE);
-			for (let i = 0; i < GRID_SIZE; i++) {
-				checked[i] = new Array(GRID_SIZE);
-			}
-
-			for (let i = 0; i < GRID_SIZE; i++) {
-				for (let j = 0; j < GRID_SIZE; j++) {
-					checked[i][j] = 'unchecked';
-				}
-			}
-
-			// checking whole board and building groups
-			// (builds new picture of groups for every move)
-
-			for (let i = 0; i < BOARD.length; i++) {
-				for (let j = 0; j < BOARD[i].length; j++) {
-					let posBeingChecked = BOARD[i][j];
-					if (checked[i][j] == 'unchecked') {
-						checked[i][j] = posBeingChecked;
-						if (posBeingChecked.state != 'empty') {
-							let newGroup = new Group(); // initalizing new group
-							checked = newGroup.build(posBeingChecked, checked);
-							groups.push(newGroup); // adding to group list
-						}
-					}
-				}
-			}
-
-			return groups;
-		}
 
 		/** */
-		function drawBoard(pad, gridSpacing, context) {
+		function drawBoard(size, pad, gridSpacing, context) {
 			//CANVAS Background
 			context.beginPath();
 			context.fillStyle = '#D6B450';
@@ -308,25 +154,19 @@
 			//GRID
 			context.beginPath();
 			//vertical lines
-			for (var i = 0; i < GRID_SIZE; i++) {
+			for (var i = 0; i < size; i++) {
 				context.moveTo(pad + gridSpacing * i, pad);
-				context.lineTo(
-					pad + gridSpacing * i,
-					pad + (GRID_SIZE - 1) * gridSpacing
-				);
+				context.lineTo(pad + gridSpacing * i, pad + (size - 1) * gridSpacing);
 			}
 			//horizontal lines
-			for (var i = 0; i < GRID_SIZE; i++) {
+			for (var i = 0; i < size; i++) {
 				context.moveTo(pad, pad + gridSpacing * i);
-				context.lineTo(
-					pad + (GRID_SIZE - 1) * gridSpacing,
-					pad + gridSpacing * i
-				);
+				context.lineTo(pad + (size - 1) * gridSpacing, pad + gridSpacing * i);
 			}
 			context.stroke();
 
 			// Drawing tengen star point
-			var tengen = new BoardRef((GRID_SIZE - 1) / 2, (GRID_SIZE - 1) / 2);
+			var tengen = new BoardRef((size - 1) / 2, (size - 1) / 2);
 			drawDot(tengen.point, context);
 
 			document.getElementById('turn').innerHTML = PLAYER_TURN + "'s turn";
@@ -337,19 +177,29 @@
 				'white has ' + PLAYER_WHITE.prisoners + ' prisoners';
 		}
 
+		function updatePlayerInfo(
+			turnElement,
+			playerWhiteElement,
+			playerBlackElement
+		) {
+			turnElement.innerText = `${PLAYER_TURN}'s turn`;
+			playerBlackElement.innerText = `black has ${PLAYER_BLACK.prisoners} prisoners.`;
+			playerWhiteElement.innerText = `white has ${PLAYER_WHITE.prisoners} prisoners`;
+		}
+
 		/** */
 		function createClickMap() {
-			const clickMapArray = new Array(GRID_SIZE);
-			for (let i = 0; i < GRID_SIZE; i++) {
-				clickMapArray[i] = new Array(GRID_SIZE);
+			const clickMapArray = new Array(BOARD_SIZE);
+			for (let i = 0; i < BOARD_SIZE; i++) {
+				clickMapArray[i] = new Array(BOARD_SIZE);
 			}
 
 			let positionX = PADDING;
 			let positionY = PADDING;
 
-			for (let i = 0; i < GRID_SIZE; i++) {
+			for (let i = 0; i < BOARD_SIZE; i++) {
 				positionY = PADDING;
-				for (let j = 0; j < GRID_SIZE; j++) {
+				for (let j = 0; j < BOARD_SIZE; j++) {
 					clickMapArray[i][j] = new Point(positionX, positionY);
 					positionY += GRID_SPACING;
 				}
@@ -374,9 +224,9 @@
 			context.stroke();
 		}
 
-		function DrawStones(board, context) {
-			board.forEach((x) => {
-				x.forEach((pos) => {
+		function drawStones(board, context) {
+			board.forEach((row) => {
+				row.forEach((pos) => {
 					if (pos.state != 'empty') {
 						let coord = findCoordinate(pos);
 						context.beginPath();
@@ -390,8 +240,8 @@
 		}
 
 		function getBoardRef(point, clickMapArray) {
-			for (var i = 0; i < GRID_SIZE; i++) {
-				for (var j = 0; j < GRID_SIZE; j++) {
+			for (var i = 0; i < BOARD_SIZE; i++) {
+				for (var j = 0; j < BOARD_SIZE; j++) {
 					var xMin = clickMapArray[i][j].x - BOX_SIZE / 2;
 					var xMax = clickMapArray[i][j].x + BOX_SIZE / 2;
 					var yMin = clickMapArray[i][j].y - BOX_SIZE / 2;
@@ -442,7 +292,7 @@
 		BOARD[1][1].state = 'black';
 		BOARD[2][0].state = 'black';
 		BOARD[3][1].state = 'black';
-		DrawStones(BOARD, CTX);
+		drawStones(BOARD, CTX);
 	});
 </script>
 
