@@ -14,7 +14,6 @@
 		const CANVAS = document.getElementById('canvas');
 		const CTX = CANVAS.getContext('2d');
 
-		// SETS SIZE FOR GRID AND GAME - only works for 9 x 9 for now.
 		const BOARD_SIZE = 9;
 		const PADDING = 48.5;
 		const GRID_SPACING = 50;
@@ -26,21 +25,26 @@
 
 		const BOARD = new Board(BOARD_SIZE);
 
-		const artist = new BadukCanvas(BOARD_SIZE, PADDING, GRID_SPACING, CTX);
+		const artist = new BadukCanvas(
+			BOARD_SIZE,
+			PADDING,
+			GRID_SPACING,
+			CTX,
+			BOX_SIZE
+		);
 
 		artist.drawBoard();
-
 		updatePlayerInfo();
-		const CLICK_MAP_ARRAY = artist.createClickMap();
+
 		CANVAS.addEventListener('mousedown', function (e) {
-			let bRef = getBoardRef(getCursorPosition(CANVAS, e), CLICK_MAP_ARRAY);
+			let bRef = artist.getBoardRef(getCursorPosition(CANVAS, e));
 
 			if (bRef != undefined) {
 				let currentPlayer = getPlayer();
 				move(bRef, currentPlayer);
-				artist.drawBoard(BOARD_SIZE, PADDING, GRID_SPACING, CTX);
+				artist.drawBoard();
 				updatePlayerInfo();
-				artist.drawStones(BOARD, CTX);
+				artist.drawStones(BOARD);
 			}
 		});
 
@@ -102,25 +106,6 @@
 			const x = event.clientX - rect.left;
 			const y = event.clientY - rect.top;
 			return new Point(x, y);
-		}
-
-		function getBoardRef(point, clickMapArray) {
-			for (let i = 0; i < BOARD_SIZE; i++) {
-				for (let j = 0; j < BOARD_SIZE; j++) {
-					const xMin = clickMapArray[i][j].x - BOX_SIZE / 2;
-					const xMax = clickMapArray[i][j].x + BOX_SIZE / 2;
-					const yMin = clickMapArray[i][j].y - BOX_SIZE / 2;
-					const yMax = clickMapArray[i][j].y + BOX_SIZE / 2;
-					if (
-						point.x >= xMin &&
-						point.x <= xMax &&
-						point.y >= yMin &&
-						point.y <= yMax
-					) {
-						return new BoardRef(i, j);
-					}
-				}
-			}
 		}
 
 		// ++++++++++++++++++++++++++++++++++

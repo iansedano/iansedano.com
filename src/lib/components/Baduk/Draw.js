@@ -15,11 +15,13 @@ export class BoardRef {
 }
 
 export class BadukCanvas {
-	constructor(size, pad, gridSpacing, context) {
+	constructor(size, pad, gridSpacing, context, boxSize) {
 		this.size = size;
 		this.pad = pad;
 		this.gridSpacing = gridSpacing;
 		this.context = context;
+		this.boxSize = boxSize;
+		this.clickMap = this.createClickMap();
 	}
 
 	drawBoard() {
@@ -105,5 +107,24 @@ export class BadukCanvas {
 		}
 
 		return clickMapArray;
+	}
+
+	getBoardRef(point) {
+		for (let i = 0; i < this.size; i++) {
+			for (let j = 0; j < this.size; j++) {
+				const xMin = this.clickMap[i][j].x - this.boxSize / 2;
+				const xMax = this.clickMap[i][j].x + this.boxSize / 2;
+				const yMin = this.clickMap[i][j].y - this.boxSize / 2;
+				const yMax = this.clickMap[i][j].y + this.boxSize / 2;
+				if (
+					point.x >= xMin &&
+					point.x <= xMax &&
+					point.y >= yMin &&
+					point.y <= yMax
+				) {
+					return new BoardRef(i, j);
+				}
+			}
+		}
 	}
 }
