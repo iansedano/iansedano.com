@@ -78,27 +78,25 @@
 
 		/** */
 		function move(bRef, activePlayer) {
-			var currentPosition = BOARD[bRef.bx][bRef.by];
+			const currentPosition = BOARD[bRef.bx][bRef.by];
 			if (currentPosition.state !== 'empty') {
 				window.alert('spot already taken');
 			} else {
 				currentPosition.state = PLAYER_TURN;
-
 				const groups = BOARD.buildGroups();
+				const currentGroup = findGroupByPosition(currentPosition, groups);
+				const deadEnemyGroup = findDeadEnemyGroup(groups, currentGroup);
 
-				//which group is the current move in?
-				var currentGroup = findGroupByPosition(currentPosition, groups);
-
-				// is there a dead enemy group?
-				var deadEnemy = findDeadEnemyGroup(groups, currentGroup);
-
-				if (currentGroup.liberties === 0 && deadEnemy === 'no dead enemy') {
+				if (
+					currentGroup.liberties === 0 &&
+					deadEnemyGroup === 'no dead enemy'
+				) {
 					window.alert('Suicide! Invalid move');
 					currentPosition.state = 'empty';
-				} else if (deadEnemy != 'no dead enemy') {
-					killGroup(deadEnemy, activePlayer);
+				} else if (deadEnemyGroup != 'no dead enemy') {
+					killGroup(deadEnemyGroup, activePlayer);
 					changeTurn();
-				} else if (deadEnemy == 'no dead enemy') {
+				} else if (deadEnemyGroup == 'no dead enemy') {
 					changeTurn();
 				}
 			}
