@@ -55,7 +55,7 @@ export default class Board {
 	}
 
 	buildGroups() {
-		const groups = [];
+		this.groups = [];
 
 		let positionsChecked = [];
 
@@ -73,13 +73,42 @@ export default class Board {
 					if (position.state != 'empty') {
 						let newGroup = new Group(this); // initalizing new group
 						positionsChecked = newGroup.build(position, positionsChecked);
-						groups.push(newGroup); // adding to group list
+						this.groups.push(newGroup); // adding to group list
 					}
 				}
 			});
 		});
 
-		return groups;
+		return this.groups;
+	}
+
+	findDeadGroup(color) {
+		var groupIndex = this.groups.findIndex(
+			(g) => g.liberties == 0 && g.colour == color
+		);
+
+		if (groupIndex == -1) {
+			return 'no dead enemy';
+		} else if (groupIndex > -1) {
+			return this.groups[groupIndex];
+		}
+	}
+
+	findGroupByPosition(positionToFind) {
+		var currentGroupIndex = -1;
+		var groupFound = '';
+		this.groups.forEach((g, index) => {
+			let posIndex = g.positions.findIndex((pos) => pos == positionToFind);
+			if (posIndex != -1) {
+				currentGroupIndex = index;
+				groupFound = this.groups[currentGroupIndex];
+			}
+		});
+		if (currentGroupIndex == -1) {
+			return 'group not found';
+		} else {
+			return groupFound;
+		}
 	}
 }
 
@@ -143,5 +172,10 @@ class Group {
 
 	isPosInGroup(pos) {
 		return this.positions.findIndex((p) => p == pos) !== -1;
+	}
+
+	die() {
+		this.positions.forEach((pos) => (pos.state = 'empty'));
+		return this.positions.length;
 	}
 }
