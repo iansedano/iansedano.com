@@ -1,16 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
-	import { BadukCanvas, BoardRef, Point } from './Baduk/Draw';
+	import { BadukCanvas, Point } from './Baduk/Draw';
+	import { Referee, Player } from './Baduk/Referee';
 	import Board from './Baduk/Board';
 
 	onMount(() => {
-		class Player {
-			constructor(colour) {
-				this.colour = colour;
-				this.prisoners = 0;
-			}
-		}
-
 		const CANVAS = document.getElementById('canvas');
 		const CTX = CANVAS.getContext('2d');
 
@@ -19,9 +13,10 @@
 		const GRID_SPACING = 50;
 		const BOX_SIZE = 30;
 
-		let PLAYER_TURN = 'black';
-		const PLAYER_BLACK = new Player('black');
-		const PLAYER_WHITE = new Player('white');
+		const REFEREE = new Referee();
+		// let PLAYER_TURN = 'black';
+		// const PLAYER_BLACK = new Player('black');
+		// const PLAYER_WHITE = new Player('white');
 
 		const BOARD = new Board(BOARD_SIZE);
 
@@ -40,7 +35,7 @@
 			let bRef = artist.getBoardRef(getCursorPosition(CANVAS, e));
 
 			if (bRef != undefined) {
-				let currentPlayer = getPlayer();
+				let currentPlayer = REFEREE.turn;
 				move(bRef, currentPlayer);
 				artist.drawBoard();
 				updatePlayerInfo();
@@ -69,11 +64,11 @@
 			if (currentPosition.state !== 'empty') {
 				window.alert('spot already taken');
 			} else {
-				currentPosition.state = PLAYER_TURN;
+				currentPosition.state = REFEREE.turn.colour;
 				BOARD.buildGroups();
 				const currentGroup = BOARD.findGroupByPosition(currentPosition);
 				const deadEnemyGroup = BOARD.findDeadGroup(
-					PLAYER_TURN === 'black' ? 'white' : 'black'
+					REFEREE.turn.colour === 'black' ? 'white' : 'black'
 				);
 
 				if (
@@ -84,19 +79,20 @@
 					currentPosition.state = 'empty';
 				} else if (deadEnemyGroup != 'no dead enemy') {
 					activePlayer.prisoners += deadEnemyGroup.die();
-					changeTurn();
+					REFEREE.changeTurn();
 				} else if (deadEnemyGroup == 'no dead enemy') {
-					changeTurn();
+					REFEREE.changeTurn();
 				}
 			}
 		}
 
 		function updatePlayerInfo() {
-			document.getElementById('turn').innerHTML = PLAYER_TURN + "'s turn";
+			document.getElementById('turn').innerHTML =
+				REFEREE.turn.colour + "'s turn";
 			document.getElementById('whitePrisoners').innerHTML =
-				'black has ' + PLAYER_BLACK.prisoners + ' prisoners.';
+				'black has ' + REFEREE.black.prisoners + ' prisoners.';
 			document.getElementById('blackPrisoners').innerHTML =
-				'white has ' + PLAYER_WHITE.prisoners + ' prisoners';
+				'white has ' + REFEREE.white.prisoners + ' prisoners';
 		}
 
 		/** */
@@ -134,7 +130,7 @@
 		// DrawStones(BOARD, CTX);
 
 		// NEAR KO SETUP
-		PLAYER_TURN = 'black';
+		REFEREE.turn = REFEREE.black;
 		BOARD[1][2].state = 'white';
 		BOARD[2][3].state = 'white';
 		BOARD[3][2].state = 'white';
