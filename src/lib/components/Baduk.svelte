@@ -13,13 +13,8 @@
 		const GRID_SPACING = 50;
 		const BOX_SIZE = 30;
 
-		const REFEREE = new Referee();
-		// let PLAYER_TURN = 'black';
-		// const PLAYER_BLACK = new Player('black');
-		// const PLAYER_WHITE = new Player('white');
-
-		const BOARD = new Board(BOARD_SIZE);
-
+		const referee = new Referee();
+		const board = new Board(BOARD_SIZE);
 		const artist = new BadukCanvas(
 			BOARD_SIZE,
 			PADDING,
@@ -35,40 +30,24 @@
 			let bRef = artist.getBoardRef(getCursorPosition(CANVAS, e));
 
 			if (bRef != undefined) {
-				let currentPlayer = REFEREE.turn;
+				let currentPlayer = referee.turn;
 				move(bRef, currentPlayer);
 				artist.drawBoard();
 				updatePlayerInfo();
-				artist.drawStones(BOARD);
+				artist.drawStones(board);
 			}
 		});
 
-		function getPlayer() {
-			if (PLAYER_TURN === 'black') {
-				return PLAYER_BLACK;
-			} else {
-				return PLAYER_WHITE;
-			}
-		}
-
-		function changeTurn() {
-			if (PLAYER_TURN === 'black') {
-				PLAYER_TURN = 'white';
-			} else {
-				PLAYER_TURN = 'black';
-			}
-		}
-
 		function move(bRef, activePlayer) {
-			const currentPosition = BOARD[bRef.bx][bRef.by];
+			const currentPosition = board[bRef.bx][bRef.by];
 			if (currentPosition.state !== 'empty') {
 				window.alert('spot already taken');
 			} else {
-				currentPosition.state = REFEREE.turn.colour;
-				BOARD.buildGroups();
-				const currentGroup = BOARD.findGroupByPosition(currentPosition);
-				const deadEnemyGroup = BOARD.findDeadGroup(
-					REFEREE.turn.colour === 'black' ? 'white' : 'black'
+				currentPosition.state = referee.turn.colour;
+				board.buildGroups();
+				const currentGroup = board.findGroupByPosition(currentPosition);
+				const deadEnemyGroup = board.findDeadGroup(
+					referee.turn.colour === 'black' ? 'white' : 'black'
 				);
 
 				if (
@@ -79,20 +58,20 @@
 					currentPosition.state = 'empty';
 				} else if (deadEnemyGroup != 'no dead enemy') {
 					activePlayer.prisoners += deadEnemyGroup.die();
-					REFEREE.changeTurn();
+					referee.changeTurn();
 				} else if (deadEnemyGroup == 'no dead enemy') {
-					REFEREE.changeTurn();
+					referee.changeTurn();
 				}
 			}
 		}
 
 		function updatePlayerInfo() {
 			document.getElementById('turn').innerHTML =
-				REFEREE.turn.colour + "'s turn";
+				referee.turn.colour + "'s turn";
 			document.getElementById('whitePrisoners').innerHTML =
-				'black has ' + REFEREE.black.prisoners + ' prisoners.';
+				'black has ' + referee.black.prisoners + ' prisoners.';
 			document.getElementById('blackPrisoners').innerHTML =
-				'white has ' + REFEREE.white.prisoners + ' prisoners';
+				'white has ' + referee.white.prisoners + ' prisoners';
 		}
 
 		/** */
@@ -130,15 +109,15 @@
 		// DrawStones(BOARD, CTX);
 
 		// NEAR KO SETUP
-		REFEREE.turn = REFEREE.black;
-		BOARD[1][2].state = 'white';
-		BOARD[2][3].state = 'white';
-		BOARD[3][2].state = 'white';
-		BOARD[2][1].state = 'white';
-		BOARD[1][1].state = 'black';
-		BOARD[2][0].state = 'black';
-		BOARD[3][1].state = 'black';
-		artist.drawStones(BOARD, CTX);
+		referee.turn = referee.black;
+		board[1][2].state = 'white';
+		board[2][3].state = 'white';
+		board[3][2].state = 'white';
+		board[2][1].state = 'white';
+		board[1][1].state = 'black';
+		board[2][0].state = 'black';
+		board[3][1].state = 'black';
+		artist.drawStones(board, CTX);
 
 		// DOUBLE CAPTURE
 		// PLAYER_TURN = 'black';
