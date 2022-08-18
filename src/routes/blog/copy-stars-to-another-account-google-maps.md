@@ -3,7 +3,7 @@ layout: post
 date: 2021-02-02T00:00:00.000Z
 title: Export and Import Google Maps Stars Between Accounts
 tags:
-  - google
+  - google-maps
   - puppeteer
   - automation
   - programming
