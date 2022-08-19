@@ -2,7 +2,7 @@
 	import gsap from 'gsap';
 	import { onMount } from 'svelte';
 
-	gsap.defaults({ ease: 'slow(0.9, 0.7, false)', duration: 0.3 });
+	// gsap.defaults({ ease: 'slow(0.9, 0.7, false)', duration: 0.3 });
 
 	const defaultEmoji = '🌙';
 

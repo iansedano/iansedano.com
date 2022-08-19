@@ -4,7 +4,7 @@
 	import gsap from 'gsap';
 	import { onMount } from 'svelte';
 
-	gsap.defaults({ ease: 'slow(0.9, 0.7, false)', duration: 5 });
+	// gsap.defaults({ ease: 'slow(0.9, 0.7, false)', duration: 5 });
 
 	onMount(() => {
 		const headerDiv = document.querySelector('header');
