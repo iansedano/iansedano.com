@@ -1,8 +1,8 @@
 <script>
-	import Twitter from '$components/Twitter.svelte';
-	import Stackoverflow from '$components/Stackoverflow.svelte';
-	import Linkedin from '$components/Linkedin.svelte';
-	import Github from '$components/Github.svelte';
+	import Twitter from '$components/TwitterLogo.svelte';
+	import Stackoverflow from '$components/StackoverflowLogo.svelte';
+	import Linkedin from '$components/LinkedinLogo.svelte';
+	import Github from '$components/GithubLogo.svelte';
 
 	const size = 30;
 </script>

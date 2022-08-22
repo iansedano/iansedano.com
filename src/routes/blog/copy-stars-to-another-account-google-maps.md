@@ -5,8 +5,6 @@ title: Export and Import Google Maps Stars Between Accounts
 tags:
   - google-maps
   - puppeteer
-  - automation
-  - programming
 description: >-
   Google lets you export your "stars", your marked places on Google maps, as
   JSON, but doesn't let you import them. Here is a way to automate entering them

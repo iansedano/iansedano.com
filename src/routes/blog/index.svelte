@@ -29,7 +29,18 @@
 					{post.meta.title}
 				</a>
 			</h2>
-			{formatDate(post.meta.date)}
+			<div class="details">
+				<div class="date">{formatDate(post.meta.date)}</div>
+				<ul class="tag-list">
+					{#if post.meta.tags}
+						{#each post.meta.tags as tag}
+							<li class="tag">
+								{tag}
+							</li>
+						{/each}
+					{/if}
+				</ul>
+			</div>
 		</li>
 	{/each}
 </ul>
@@ -45,6 +56,18 @@
 					text-decoration: none;
 				}
 			}
+		}
+	}
+
+	.tag-list,
+	.details {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.tag {
+		&:before {
+			content: '🏷️';
 		}
 	}
 </style>

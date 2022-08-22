@@ -4,10 +4,8 @@ title: 'The "Bridge", a.k.a. La Maquina del Espacio-Tiempo'
 date: 2018-12-15T00:00:00.000Z
 tags:
   - music
-  - hardware
-  - midi
+  - electronics
   - diy
-  - programming
 description: >-
   A music performance augmentation system. Finding creative ways to integrate
   digital tools into a live improvised performance.

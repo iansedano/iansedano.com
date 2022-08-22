@@ -12,33 +12,46 @@ description: >-
   is a minimal cURL script.
 ---
 
-<script context="module">
-	export const load = async ({ fetch }) => {
-		const json = await fetch(
-				"https://api.github.com/gists/e0b259ab9c63ebddd22658f697026c19"
-			)
-			.then(resp => resp.json())
-			
-		
-		
-		return {
-			props: {code: json.files["get_token.sh"].content}
-		};
-	};
-</script>
+While the Google client libraries that wrap the OAuth functionality are great, sometimes you want something a bit more basic.
 
-<script>
-	
-	export let code;
-	console.log(code)
-	
-	
-	
-	
-</script>
+Here is a basic shell script that will allow you to grab an OAuth token:
 
-While the Google client libraries that wrap the OAuth functinality are great, sometimes you want something a bit more basic.
+```shell
+#!/bin/bash
 
-(This snippet is fetched from a [GitHub Gist](https://gist.github.com/iansedano/e0b259ab9c63ebddd22658f697026c19))
+# Usage
+#
+# . get_token.sh [CLIEND_ID] [CLIENT_SECRET] [SCOPE]
+#
+# Script will prompt you to visit a url to get the auth code,
+# and wait for you to provide them and then output the tokens.
 
-<pre><code>{code}</code></pre>
+
+CLIENT_ID=$1
+CLIENT_SECRET=$2
+SCOPE=$3
+REDIRECT_URI="urn:ietf:wg:oauth:2.0:oob"
+
+AUTH_CODE_URL="https://accounts.google.com/o/oauth2/v2/auth?"`
+          `"client_id=${CLIENT_ID}&scope=${SCOPE}&response_type=code&"`
+          `"redirect_uri=${REDIRECT_URI}"
+
+echo "get your auth code from:
+${AUTH_CODE_URL}
+"
+
+read -p "Enter the authorization code:" AUTH_CODE
+
+
+CURL_DATA="client_id=${CLIENT_ID}&"`
+  `"client_secret=${CLIENT_SECRET}&"`
+  `"code=${AUTH_CODE}&"`
+  `"redirect_uri=${REDIRECT_URI}&"`
+  `"grant_type=authorization_code"
+
+printf "\n"
+echo $CURL_DATA
+
+curl --request POST --data $CURL_DATA https://oauth2.googleapis.com/token
+printf "\n"
+```
