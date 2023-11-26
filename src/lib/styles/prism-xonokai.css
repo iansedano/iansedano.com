@@ -7,28 +7,32 @@
 /* --code: #d81b60;
 --code: #f06292; */
 
-@font-face {
-  font-family: CascadiaCode;
-  src: url('$lib/fonts/CascadiaMono.woff2') format('woff2');
-  font-weight: 400;
+:root {
+	--code-font-size: 0.9rem;
 }
 
 @font-face {
-  font-family: CascadiaCode;
-  src: url('$lib/fonts/CascadiaMonoItalic.woff2') format('woff2');
-  font-style: italic;
+	font-family: CascadiaCode;
+	src: url('$lib/fonts/CascadiaMono.woff2') format('woff2');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: CascadiaCode;
+	src: url('$lib/fonts/CascadiaMonoItalic.woff2') format('woff2');
+	font-style: italic;
 }
 
 code {
-  font-family: CascadiaCode, Menlo, Monaco, "Courier New", monospace;
+	font-family: CascadiaCode, Menlo, Monaco, 'Courier New', monospace;
 }
 
 code {
 	font-size: var(--code-font-size);
 }
 
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*='language-'],
+pre[class*='language-'] {
 	-moz-tab-size: 2;
 	-o-tab-size: 2;
 	tab-size: 2;
@@ -44,37 +48,37 @@ pre[class*="language-"] {
 	text-shadow: none;
 }
 
-pre > code[class*="language-"] {
+pre > code[class*='language-'] {
 	font-size: var(--code-font-size);
 }
 
-pre[class*="language-"],
-:not(pre) > code[class*="language-"] {
+pre[class*='language-'],
+:not(pre) > code[class*='language-'] {
 	background: #2a2a2a;
 }
 
-pre[class*="language-"] {
+pre[class*='language-'] {
 	padding: 15px;
-	border-radius: 4px;
+	border-radius: 1rem;
 	border: 1px solid #e1e1e8;
 	overflow: auto;
 	position: relative;
 }
 
-pre[class*="language-"] code {
+pre[class*='language-'] code {
 	white-space: pre;
 	display: block;
 }
 
-:not(pre) > code[class*="language-"] {
+:not(pre) > code[class*='language-'] {
 	padding: 0.15em 0.2em 0.05em;
-	border-radius: .3em;
+	border-radius: 0.3em;
 	border: 0.13em solid #7a6652;
 	box-shadow: 1px 1px 0.3em -0.1em #000 inset;
 }
 
 .token.namespace {
-	opacity: .7;
+	opacity: 0.7;
 }
 
 .token.comment,

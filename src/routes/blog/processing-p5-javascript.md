@@ -3,7 +3,6 @@ layout: post
 title: p5.js Sketches
 date: 2020-05-01T00:00:00.000Z
 tags:
-  - art
   - design
   - javascript
   - p5

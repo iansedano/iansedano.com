@@ -7,7 +7,7 @@
 	--mono-font: CascadiaCode, Menlo, Monaco, 'Courier New', monospace;
 }
 
-.light-theme {
+:root {
 	--bg: #fff;
 	--accent-bg: #f5f7ff;
 	--text: #212121;
@@ -16,25 +16,6 @@
 	--accent: #0d47a1;
 	--preformatted: #444;
 	--disabled: #efefef;
-}
-
-:root {
-	color-scheme: dark;
-	--bg: #212121;
-	--accent-bg: #2b2b2b;
-	--text: #dcdcdc;
-	--text-light: #ababab;
-	--border: #666;
-	--accent: #ffb300;
-	--preformatted: #ccc;
-	--marked: #ffdd33;
-	--disabled: #111;
-	--code-font-size: 0.9rem;
-	/* Add a bit of transparency so light media isn't so glaring in dark mode */
-	img,
-	video {
-		opacity: 0.8;
-	}
 }
 
 body {
@@ -113,68 +94,68 @@ body > footer {
 }
 
 /* Format headers */
-h1 {
-	font-size: 3rem;
-}
+// h1 {
+// 	font-size: 3rem;
+// }
 
-h2 {
-	font-size: 2.6rem;
-	margin-top: 3rem;
-}
+// h2 {
+// 	font-size: 2.6rem;
+// 	margin-top: 3rem;
+// }
 
-h3 {
-	font-size: 2rem;
-	margin-top: 3rem;
-}
+// h3 {
+// 	font-size: 2rem;
+// 	margin-top: 3rem;
+// }
 
-h4 {
-	font-size: 1.44rem;
-}
+// h4 {
+// 	font-size: 1.44rem;
+// }
 
-h5 {
-	font-size: 1.15rem;
-}
+// h5 {
+// 	font-size: 1.15rem;
+// }
 
-h6 {
-	font-size: 0.96rem;
-}
+// h6 {
+// 	font-size: 0.96rem;
+// }
 
 /* Prevent long strings from overflowing container */
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	overflow-wrap: break-word;
-}
+// p,
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6 {
+// 	overflow-wrap: break-word;
+// }
 
 /* Fix line height when title wraps */
-h1,
-h2,
-h3 {
-	line-height: 1.1;
-}
+// h1,
+// h2,
+// h3 {
+// 	line-height: 1.1;
+// }
 
-/* Reduce header size on mobile */
-@media only screen and (max-width: 720px) {
-	h1 {
-		font-size: 2.5rem;
-	}
+// /* Reduce header size on mobile */
+// @media only screen and (max-width: 720px) {
+// 	h1 {
+// 		font-size: 2.5rem;
+// 	}
 
-	h2 {
-		font-size: 2.1rem;
-	}
+// 	h2 {
+// 		font-size: 2.1rem;
+// 	}
 
-	h3 {
-		font-size: 1.75rem;
-	}
+// 	h3 {
+// 		font-size: 1.75rem;
+// 	}
 
-	h4 {
-		font-size: 1.25rem;
-	}
-}
+// 	h4 {
+// 		font-size: 1.25rem;
+// 	}
+// }
 
 /* Format links & buttons */
 a,
