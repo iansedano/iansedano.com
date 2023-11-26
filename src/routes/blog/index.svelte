@@ -19,8 +19,6 @@
 	}
 </script>
 
-<a href="/blog/tags">Browse tags</a>
-
 <ul>
 	{#each posts as post}
 		<li>
@@ -29,18 +27,8 @@
 					{post.meta.title}
 				</a>
 			</h2>
-			<div class="details">
-				<div class="date">{formatDate(post.meta.date)}</div>
-				<ul class="tag-list">
-					{#if post.meta.tags}
-						{#each post.meta.tags as tag}
-							<li class="tag">
-								{tag}
-							</li>
-						{/each}
-					{/if}
-				</ul>
-			</div>
+			<p>{formatDate(post.meta.date)}</p>
+			<p>{post.meta.description}</p>
 		</li>
 	{/each}
 </ul>
@@ -50,24 +38,21 @@
 		padding-left: 0;
 		li {
 			list-style-type: none;
+			margin-bottom: 1rem;
 			h2 {
 				font-size: 1.5rem;
+				font-weight: 500;
+				margin-bottom: 0.2rem;
 				a {
+					color: black;
 					text-decoration: none;
 				}
 			}
-		}
-	}
-
-	.tag-list,
-	.details {
-		display: flex;
-		flex-direction: row;
-	}
-
-	.tag {
-		&:before {
-			content: '🏷️';
+			p {
+				font-size: 1rem;
+				margin-top: 0.2rem;
+				margin-bottom: 0.2rem;
+			}
 		}
 	}
 </style>

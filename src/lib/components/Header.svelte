@@ -35,9 +35,7 @@
 				<li><a href="/blog">✍</a></li>
 			</ul>
 		</div>
-		<div class="middle">
-			<DarkModeToggle />
-		</div>
+		<div class="middle" />
 		<div class="right" />
 	</nav>
 </header>

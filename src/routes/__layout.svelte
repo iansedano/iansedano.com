@@ -29,3 +29,9 @@
 {/key}
 
 <footer />
+
+<style>
+	main {
+		padding: 0px;
+	}
+</style>

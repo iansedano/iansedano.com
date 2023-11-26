@@ -1,6 +1,6 @@
 ---
 layout: post
-title: curl Script to Get Google OAuth Tokens
+title: 'Curl Script to Get Google OAuth Tokens'
 date: 2021-08-18T00:00:00.000Z
 tags:
   - google-apis
