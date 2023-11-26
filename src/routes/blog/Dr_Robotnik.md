@@ -2,9 +2,6 @@
 layout: post
 title: Dr Robotnik
 date: 2020-05-01T00:00:00.000Z
-tags:
-  - music
-  - video
 description: >-
   A video cover of a classic video game song, the Dr. Robotnik theme. Recorded
   during the 2020 Covid Lockdown.

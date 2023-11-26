@@ -2,10 +2,6 @@
 layout: post
 title: Taking a Hack-saw to an FCB1010
 date: 2017-05-02T00:00:00.000Z
-tags:
-  - music
-  - hardware
-  - diy
 category: personal projects
 description: >-
   Modding a MIDI footpedal. It had poor quality pedals and even though its

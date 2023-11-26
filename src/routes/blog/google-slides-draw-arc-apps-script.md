@@ -3,11 +3,6 @@ layout: post
 title: >-
   Draw Arcs in Google Slides with Apps Script and the JavaScript Canvas API
 date: 2021-04-12T00:00:00.000Z
-tags:
-  - apps-script
-  - google-slides
-  - canvas
-  - javascript
 description: >-
   It would appear that you can manually increase the
   length of an arc in Google Slides, but doing it via the API or Apps Script is

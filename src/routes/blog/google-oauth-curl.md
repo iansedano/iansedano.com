@@ -2,10 +2,6 @@
 layout: post
 title: 'Curl Script to Get Google OAuth Tokens'
 date: 2021-08-18T00:00:00.000Z
-tags:
-  - google-apis
-  - curl
-  - oauth
 description: >-
   If you just need a token to do some experimenting, or perhaps you don't want
   to download the whole client library just to get your hands on a token, here

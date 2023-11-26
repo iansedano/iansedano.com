@@ -2,8 +2,6 @@
 layout: post
 title: Flyers and Websites
 date: 2019-06-10T00:00:00.000Z
-tags:
-  - design
 description: >-
   A few flyer and website designs that I made while working for a small gallery
   in Barcelona.

@@ -2,10 +2,6 @@
 layout: post
 title: Go, the Game
 date: 2020-06-27T00:00:00.000Z
-tags:
-  - javascript
-  - games
-  - canvas
 redirect: 'https://www.iansedano.com/Simple_Baduk'
 description: >-
   Learning JavaScript by building a 9 x 9 go board for 2 players implemented
