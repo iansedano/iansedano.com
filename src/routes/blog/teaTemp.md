@@ -2,10 +2,6 @@
 layout: post
 title: Arduino Tea Temperature Sensor
 date: 2021-01-18T00:00:00.000Z
-tags:
-  - c++
-  - diy
-  - electronics
 description: >-
   Learn C++ and Arduino by creating a sensor that will let you know when your
   tea is at the optimum temperature by playing a Super Mario song.

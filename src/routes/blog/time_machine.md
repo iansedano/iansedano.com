@@ -2,10 +2,6 @@
 layout: post
 title: 'Music Making Machine'
 date: 2018-12-15T00:00:00.000Z
-tags:
-  - music
-  - electronics
-  - diy
 description: >-
   A music performance augmentation system. Finding creative ways to integrate
   digital tools into a live improvised performance.

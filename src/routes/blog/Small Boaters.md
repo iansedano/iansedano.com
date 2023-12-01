@@ -2,9 +2,6 @@
 layout: post
 title: Small Boaters
 date: 2017-05-22T00:00:00.000Z
-tags:
-  - music
-  - video
 description: Some samples from a band I played keys for in Barcelona.
 ---
 
