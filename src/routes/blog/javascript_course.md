@@ -2,8 +2,6 @@
 layout: post
 title: I Made a JavaScript Course
 date: 2021-02-01T00:00:00.000Z
-tags:
-  - javascript
 description: A introduction to Vanilla JavaScript.
 ---
 
