@@ -31,8 +31,8 @@
 	<nav>
 		<div class="left">
 			<ul>
-				<li><a href="/">🏠</a></li>
-				<li><a href="/blog">✍</a></li>
+				<li><a href="/">Home</a></li>
+				<li><a href="/blog">Blog</a></li>
 			</ul>
 		</div>
 		<div class="middle" />
@@ -44,7 +44,7 @@
 	header {
 		position: sticky;
 		top: 0px;
-		font-size: 1.5em;
+		font-size: 1.3rem;
 		z-index: 999;
 	}
 
@@ -68,6 +68,7 @@
 	a {
 		text-decoration: none;
 		border: none;
+		padding: 0;
 	}
 
 	ul {
@@ -83,6 +84,6 @@
 	}
 
 	.left {
-		margin-left: 1em;
+		margin-left: 0;
 	}
 </style>
