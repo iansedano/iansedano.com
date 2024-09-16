@@ -1,15 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		%sveltekit.head%
+		<style>
+			@media (min-width: 640px) {
+				body div {
+					margin-left: 1rem;
+					margin-right: 1rem;
+				}
+			}
+			body div {
+				margin-left: 0.4rem;
+				margin-right: 0.4rem;
+			}
+		</style>
+	</head>
 
-<head>
-	<meta charset="utf-8" />
-	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-	<meta name="viewport" content="width=device-width" />
-	%sveltekit.head%
-</head>
-
-<body>
-	<div>%sveltekit.body%</div>
-</body>
-
+	<body>
+		<div>%sveltekit.body%</div>
+	</body>
 </html>

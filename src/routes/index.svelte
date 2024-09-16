@@ -9,10 +9,8 @@
 </script>
 
 <h1>Ian Currie Sedano</h1>
-<p>Software Engineer, Musician, Dog Lover</p>
 <p>
-	Front End Lead at <a href="https://codingnomads.co">CodingNomads</a> (new site
-	coming soon!)
+	Full stack engineer at <a href="https://codingnomads.co">CodingNomads</a>
 </p>
 
 <ul>
