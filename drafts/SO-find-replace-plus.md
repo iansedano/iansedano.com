@@ -12,4 +12,5 @@ description: >-
   docs will not keep format or hyperlinks. In this answer I demonstrate a
   function that will keep all these attributes.
 ---
+
 redirect: https://stackoverflow.com/questions/65879990/how-to-replace-words-in-google-doc-while-maintaing-text-style/65887609#65887609

@@ -11,4 +11,5 @@ description: >-
   corresponding cURL to add data to a spreadsheet. In this question the user was
   using it with Arduino sensors.
 ---
+
 redirect: https://stackoverflow.com/a/66473384/10445017

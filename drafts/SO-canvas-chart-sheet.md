@@ -13,4 +13,5 @@ description: >-
   custom images. In this answer it is used to generate a series of custom charts
   and then save the images to Drive.
 ---
+
 redirect: https://stackoverflow.com/questions/66257226/custom-chart-using-google-sheets-data/66277367#66277367

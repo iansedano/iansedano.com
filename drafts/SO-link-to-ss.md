@@ -12,4 +12,5 @@ description: >-
   workaround if this functionality is necessary. Though at this point you might
   as well be using a Web App.
 ---
+
 redirect: https://stackoverflow.com/questions/64606458/how-to-copy-table-from-a-spreadsheet-to-a-google-doc-as-link-to-spreadsheet/64611103#64611103

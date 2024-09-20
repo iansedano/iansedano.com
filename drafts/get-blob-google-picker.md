@@ -29,26 +29,26 @@ Here is an example of that flow using the Picker API to feed into the Drive API 
 ```html
 <!-- index.html -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta charset="utf-8" />
-		<title>Google Picker Example</title>
-	</head>
-	<body>
-		<button id="authorize_button" style="display: none;">Authorize</button>
-		<button id="signout_button" style="display: none;">Sign Out</button>
-		<div id="result"></div>
+  <head>
+    <meta charset="utf-8" />
+    <title>Google Picker Example</title>
+  </head>
+  <body>
+    <button id="authorize_button" style="display: none;">Authorize</button>
+    <button id="signout_button" style="display: none;">Sign Out</button>
+    <div id="result"></div>
 
-		<script type="text/javascript" src="script.js"></script>
-		<script
-			async
-			defer
-			src="https://apis.google.com/js/api.js"
-			onload="this.onload=function(){};handleClientLoad()"
-			onreadystatechange="if (this.readyState === 'complete') this.onload()"
-		></script>
-	</body>
+    <script type="text/javascript" src="script.js"></script>
+    <script
+      async
+      defer
+      src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()"
+    ></script>
+  </body>
 </html>
 ```
 

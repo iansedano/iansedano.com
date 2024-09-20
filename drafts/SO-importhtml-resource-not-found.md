@@ -10,4 +10,5 @@ description: >-
   often used for web-scraping, but using these formulae are unreliable for this.
   To answer this SO question I investigated why it fails for Yahoo finance.
 ---
+
 redirect: https://stackoverflow.com/questions/66517080/importhtml-importxml-suddenly-returning-resource-at-url-not-found/66544556#66544556

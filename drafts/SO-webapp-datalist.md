@@ -9,4 +9,5 @@ description: >-
   (StackOverflow Answer) An example of how to set up a web app with a front-end,
   to pull values from a spreadsheet to populate a datalist element.
 ---
+
 redirect: https://stackoverflow.com/questions/67044347/how-to-set-a-range-of-values-from-google-sheets-to-datalist/67055792#67055792

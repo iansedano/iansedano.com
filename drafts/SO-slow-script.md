@@ -11,4 +11,5 @@ description: >-
   solution is normally to just grab everything in the spreadsheet in one call,
   transform it, and then dump it back (within reason).
 ---
+
 redirect: https://stackoverflow.com/questions/66284187/slow-loop-to-find-and-copy/66365218#66365218

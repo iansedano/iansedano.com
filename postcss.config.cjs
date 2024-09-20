@@ -1,7 +1,6 @@
-const autoprefixer = require('autoprefixer');
-
-const config = {
-	plugins: [autoprefixer]
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
 };
-
-module.exports = config;

@@ -13,4 +13,5 @@ description: >-
   save the script state and then create a one time trigger to resume execution.
   It will do this in a loop until done.
 ---
+
 redirect: https://stackoverflow.com/questions/65020367/save-google-app-script-state-while-parsing-an-object-array-and-continue-where-le/65024800#65024800
