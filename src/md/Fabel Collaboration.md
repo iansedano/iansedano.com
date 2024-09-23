@@ -1,4 +1,5 @@
 ---
+slug: fabel-collaboration-music-release
 title: Fábel
 date: 2013-10-15T00:00:00.000Z
 description: >-

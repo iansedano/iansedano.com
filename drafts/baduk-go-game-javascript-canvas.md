@@ -1,5 +1,5 @@
 ---
-layout: post
+slug: baduk-go-game-javascript-canvas
 title: Go, the Game
 date: 2020-06-27T00:00:00.000Z
 redirect: "https://www.iansedano.com/Simple_Baduk"

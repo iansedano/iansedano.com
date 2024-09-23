@@ -1,5 +1,5 @@
 ---
-layout: post
+slug: codingame-coders-strike-back-python
 title: Codingame Pod Racer Competition
 date: 2020-06-20T00:00:00.000Z
 description: >-
