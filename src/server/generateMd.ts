@@ -3,17 +3,11 @@
 import matter from "gray-matter";
 import fs from "fs";
 import path from "path";
-import { JSDOM } from "jsdom";
-import createDOMPurify from "dompurify";
-import Shiki from "@shikijs/markdown-it";
-import MarkdownIt from "markdown-it";
 import getProjectRoot from "./getProjectRoot";
-import { type } from "arktype";
+import { type, ArkErrors } from "arktype";
+import getMarkdownParser from "./markdownParser";
 
-const ROOT = getProjectRoot();
-const CONTENT = path.join(ROOT, "src", "md");
-const window = new JSDOM("").window;
-const DOMPurify = createDOMPurify(window);
+const CONTENT_DIR = "./src/md";
 
 const frontMatterSchema = type({
   title: "string",
@@ -25,34 +19,51 @@ const frontMatterSchema = type({
   "keywords?": "string[]",
 });
 
-const md = MarkdownIt();
+export async function getMarkdownPosts(): Promise<Post[]> {
+  const files = fs.readdirSync(path.join(getProjectRoot(), CONTENT_DIR));
+  const mdParser = await getMarkdownParser();
+  const pages: Post[] = [];
 
-md.use(
-  await Shiki({
-    theme: "monokai",
-  }),
-);
+  for (const file of files) {
+    try {
+      const filePath = path.join(CONTENT_DIR, file);
+      const post = contentToPost(
+        fs.readFileSync(filePath, "utf8"),
+        path.basename(file, path.extname(file)),
+        mdParser,
+      );
 
-export function getMarkdownPosts(): Post[] {
-  const files = fs.readdirSync(CONTENT);
+      pages.push(post);
+    } catch (e) {
+      console.error(`Error with ${file}, ${e}`);
+      continue;
+    }
+  }
 
-  return files
-    .map((file) => {
-      const filePath = path.join(CONTENT, file);
-      const markdownFile = matter(fs.readFileSync(filePath, "utf8"));
-
-      const out = frontMatterSchema(markdownFile.data);
-      if (out instanceof type.errors) {
-        console.error(`${filePath}: ${out.summary}`);
-        return undefined;
-      } else {
-        return {
-          ...markdownFile,
-          data: frontMatterSchema(markdownFile.data),
-          content: DOMPurify.sanitize(md.render(markdownFile.content, { async: false })),
-          fileStem: path.basename(file, path.extname(file)),
-        };
-      }
-    })
-    .filter((x) => x !== undefined);
+  return pages;
 }
+
+const contentToPost = (
+  content: string,
+  fileStem: string,
+  renderMd: (content: string) => string,
+): Post => {
+  const markdownFile = matter(content);
+
+  const frontMatter: typeof frontMatterSchema.infer | ArkErrors = frontMatterSchema(
+    markdownFile.data,
+  );
+
+  if (frontMatter instanceof type.errors) throw new Error(frontMatter.summary);
+
+  return {
+    ...markdownFile,
+    data: {
+      ...frontMatter,
+      description: renderMd(markdownFile.data.description),
+      title: renderMd(markdownFile.data.title).replace(/<p>|<\/p>/g, ""), // remove outer <p> tags
+    },
+    content: renderMd(markdownFile.content),
+    fileStem: fileStem,
+  };
+};

@@ -1,8 +1,10 @@
 {
-  "name": "example-with-tailwindcss",
+  "name": "solidstart-blog-template",
   "type": "module",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vinxi dev",
+    "dev-host": "vinxi dev --host",
     "build": "vinxi build",
     "start": "vinxi start",
     "prepare": "husky",
@@ -41,6 +43,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "typescript": "^5.6.2",
-    "typescript-eslint": "^8.6.0"
+    "typescript-eslint": "^8.6.0",
+    "vite-plugin-restart": "^0.4.1"
   }
 }
