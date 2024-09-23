@@ -1,5 +1,5 @@
 ---
-layout: post
+slug: rosalie-mike-dowling-cover
 title: Rosalie
 date: 2018-02-22T00:00:00.000Z
 description: A recording of an acoustic guitar arrangement by Mike Dowling.

@@ -1,5 +1,5 @@
 ---
-layout: post
+slug: arduino-tea-temperature-sensor-cpp-code
 title: Arduino Tea Temperature Sensor
 date: 2021-01-18T00:00:00.000Z
 description: >-

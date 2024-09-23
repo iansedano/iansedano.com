@@ -8,7 +8,9 @@ export default function BlogPost() {
   return (
     <ul class="mx-4 my-8 flex max-w-prose flex-col gap-4 md:mx-auto">
       {params.slug}
-      <For each={blogPosts()}>
+      <For
+        each={blogPosts()?.sort((a, b) => (a.data.date.getTime() > b.data.date.getTime() ? -1 : 1))}
+      >
         {(blogPost) => {
           const date = new Intl.DateTimeFormat("en-GB", {
             day: "numeric",

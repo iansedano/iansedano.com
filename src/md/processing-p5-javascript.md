@@ -1,8 +1,9 @@
 ---
-layout: post
+slug: processing-p5-javascript-sketches
 title: p5.js Sketches
 date: 2020-05-01T00:00:00.000Z
 description: bubble visualization with p5.js library
+draft: true
 ---
 
 <script>

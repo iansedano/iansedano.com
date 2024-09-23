@@ -1,5 +1,5 @@
 ---
-layout: post
+slug: siglo22-smode-royal-society-music-video
 title: Siglo 22 / Smode feat. Royal Society
 date: 2018-12-09T00:00:00.000Z
 description: >-
