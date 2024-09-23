@@ -20,6 +20,22 @@ module.exports = {
             },
           },
         },
+        sm: {
+          css: {
+            pre: {
+              fontSize: "1rem",
+              lineHeight: "1.2",
+            },
+          },
+        },
+        base: {
+          css: {
+            pre: {
+              fontSize: "1.1rem",
+              lineHeight: "1.2",
+            },
+          },
+        },
       }),
     },
   },
