@@ -22,40 +22,37 @@ The next step would be getting a full JSON representation of the arc and the sli
 
 ```json
 {
-	"objectId": "p",
-	"pageElements": [
-		{
-			"objectId": "SLIDES_API17000000589_3",
-			"size": {...}
-			},
-			"transform": {
-				"scaleX": -0.1652,
-				"scaleY": -0.1636,
-				"shearX": -0.1057,
-				"shearY": 0.1067,
-				"translateX": 6532089.87,
-				"translateY": 1296513.29,
-				"unit": "EMU"
-			},
-			"shape": {
-				"shapeType": "ARC",
-				"shapeProperties": {
-					"shapeBackgroundFill": {...},
-					"outline": {...},
-					"shadow": {...}
-				}
-			}
-		}
-	],
-	"slideProperties": {...},
-	"revisionId": "_7MTqW3NeaZ8yQ",
-	"pageProperties": {...}
+  "objectId": "p",
+  "pageElements": [
+    {
+      "objectId": "SLIDES_API17000000589_3",
+      "size": {}, // abbreviated
+      "transform": {
+        "scaleX": -0.1652,
+        "scaleY": -0.1636,
+        "shearX": -0.1057,
+        "shearY": 0.1067,
+        "translateX": 6532089.87,
+        "translateY": 1296513.29,
+        "unit": "EMU"
+      },
+      "shape": {
+        "shapeType": "ARC",
+        "shapeProperties": {
+          "shapeBackgroundFill": {}, // abbreviated
+          "outline": {}, // abbreviated
+          "shadow": {} // abbreviated
+        }
+      }
+    }
+  ],
+  "slideProperties": {},
+  "revisionId": "_7MTqW3NeaZ8yQ",
+  "pageProperties": {}
 }
 ```
 
 Even changing the sweep of the arc manually and putting the two versions through a [diff](https://en.wikipedia.org/wiki/Diff) will yield no changes except for the `revisionId`.
-
-If more native circle and arc drawing methods is something you are interested in seeing, there is an existing [feature request](https://issuetracker.google.com/issues/new?component=191598&template=823918). Go and add a ⭐ to it.
 
 ## Workarounds
 
@@ -146,10 +143,8 @@ function addToPresentation(dataURL) {
 
 Running this will open a sidebar in the UI, draw the image and then add the image to the first slide.
 
-[![enter image description here][1]][1]
+<!-- ![](https://i.stack.imgur.com/V2uF4.png) -->
 
 The drawback of this method is that you need to have the UI open, or else it won't run the JavaScript that is required to draw the arc.
-
-[1]: https://i.stack.imgur.com/V2uF4.png
 
 Originally posted in [Stack Overflow](https://stackoverflow.com/questions/67022218/increase-the-length-of-arc-programmatically/67059323#67059323)
