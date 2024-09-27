@@ -2,7 +2,7 @@
 layout: post
 title: The Misuse of Best Practices
 date: 2024-09-27T00:00:00.000Z
-description: When best practices aren't the best. Maybe they're just good, or the way we've always done things.
+description: When best practices aren't the best. Maybe they're simply "good", or maybe they're just the way we've always done things.
 ---
 
 I'm not a fan of the term **best practices**. I think it's a [misnomer](https://en.wikipedia.org/wiki/Misnomer) that can lead to fragility. That said, we can't exactly do anything about the term -- it's a succinct way to communicate the concept of:

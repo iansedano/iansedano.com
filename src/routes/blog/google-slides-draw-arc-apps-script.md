@@ -1,13 +1,10 @@
 ---
 layout: post
 title: >-
-  Draw Arcs in Google Slides with Apps Script and the JavaScript Canvas API
+  How to Draw Custom Shapes in Google Slides
 date: 2021-04-12T00:00:00.000Z
 description: >-
-  It would appear that you can manually increase the
-  length of an arc in Google Slides, but doing it via the API or Apps Script is
-  not possible. In this answer I prove this and offer a workaround to creating
-  custom length arcs using a pop up and the Canvas API.
+  In Google Slides have a preselected set of shapes to choose from. But what if you want to draw a custom shape programmatically, like a circle segment or an arc?
 ---
 
 In Google Slides, you can manually create circle segments, or arcs, but there doesn't seem to be a corresponding way to create them programatically with the [Slides API](https://developers.google.com/slides/api) or with a ready-made [Apps Script](https://developers.google.com/apps-script) method.

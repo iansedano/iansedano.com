@@ -10,14 +10,14 @@ description: >-
 
 While the Google client libraries that wrap the OAuth functionality are great, sometimes you want something a bit more basic.
 
-Here is a basic shell script that will allow you to grab an OAuth token:
+Here is a basic shell script that will allow you to get an OAuth token:
 
 ```shell
 #!/bin/bash
 
 # Usage
 #
-# . get_token.sh [CLIEND_ID] [CLIENT_SECRET] [SCOPE]
+# get_token.sh [CLIEND_ID] [CLIENT_SECRET] [SCOPE]
 #
 # Script will prompt you to visit a url to get the auth code,
 # and wait for you to provide them and then output the tokens.
@@ -37,7 +37,6 @@ ${AUTH_CODE_URL}
 "
 
 read -p "Enter the authorization code:" AUTH_CODE
-
 
 CURL_DATA="client_id=${CLIENT_ID}&"`
   `"client_secret=${CLIENT_SECRET}&"`

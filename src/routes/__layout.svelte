@@ -33,5 +33,7 @@
 <style>
 	main {
 		padding: 0px;
+		margin-left: 1rem;
+		margin-right: 1rem;
 	}
 </style>

@@ -1,6 +1,8 @@
 <script>
 	export let title;
 	export let date;
+	export let layout;
+	export let description;
 
 	function formatDate(dateString) {
 		return new Intl.DateTimeFormat('en-UK').format(new Date(dateString));
@@ -10,10 +12,11 @@
 <svelte:head>
 	<title>{title} - Ian Currie</title>
 	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
 </svelte:head>
 
 <article class="article">
-	<h1>{title}</h1>
+	<h1 class="title">{title}</h1>
 
 	<p><i>{formatDate(date)}</i></p>
 
@@ -42,5 +45,9 @@
 		font-size: 1rem !important;
 		font-weight: 500;
 		margin-bottom: 0.2rem;
+	}
+
+	.title {
+		text-wrap: balance;
 	}
 </style>

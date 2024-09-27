@@ -43,15 +43,22 @@
 				font-size: 1.5rem;
 				font-weight: 500;
 				margin-bottom: 0.2rem;
+				text-wrap: balance;
 				a {
 					color: black;
 					text-decoration: none;
+					&:hover {
+						color: rgb(13, 20, 73);
+						text-decoration: underline;
+					}
 				}
 			}
 			p {
 				font-size: 1rem;
 				margin-top: 0.2rem;
 				margin-bottom: 0.2rem;
+				max-width: 50ch;
+				color: #3d3d3d;
 			}
 		}
 	}

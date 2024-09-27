@@ -14,41 +14,40 @@
 </p>
 
 <ul>
-	<li id="stackoverflow">
-		<a
-			href="https://stackoverflow.com/users/10445017/iansedano"
-			target="_blank"
-		>
+	<a href="https://stackoverflow.com/users/10445017/iansedano" target="_blank">
+		<li class="logo" id="stackoverflow">
 			<Stackoverflow {size} />
-		</a>
-	</li>
-	<li id="github">
-		<a href="https://github.com/iansedano" target="_blank">
+		</li>
+	</a>
+	<a href="https://github.com/iansedano" target="_blank">
+		<li class="logo" id="github">
 			<Github {size} />
-		</a>
-	</li>
-	<li id="twitter">
-		<a href="https://twitter.com/iansedano" target="_blank">
+		</li>
+	</a>
+
+	<a href="https://twitter.com/iansedano" target="_blank">
+		<li class="logo" id="twitter">
 			<Twitter {size} />
-		</a>
-	</li>
-	<li id="linkedin">
-		<a href="https://www.linkedin.com/in/ian-currie-82448a58/" target="_blank">
+		</li>
+	</a>
+	<a href="https://www.linkedin.com/in/ian-currie-82448a58/" target="_blank">
+		<li class="logo" id="linkedin">
 			<Linkedin {size} />
-		</a>
-	</li>
-	<li id="realpython">
-		<a href="https://realpython.com/team/icurrie/" target="_blank">
+		</li></a
+	>
+	<a href="https://realpython.com/team/icurrie/" target="_blank">
+		<li class="logo" id="realpython">
 			<RealPythonLogo size={80} />
-		</a>
-	</li>
+		</li>
+	</a>
 </ul>
 
 <style lang="scss">
 	ul {
 		display: flex;
-		flex-direction: column;
-		align-items: left;
+		flex-direction: row;
+		align-items: center;
+		gap: 1em;
 		left: 0;
 		width: 3em;
 		padding-left: 0px;
@@ -79,15 +78,21 @@
 
 	#stackoverflow {
 		position: relative;
-		left: -8px;
+	}
+
+	#linkedin {
+		position: relative;
+		bottom: 2px;
 	}
 
 	#twitter {
 		position: relative;
-		left: -8px;
 	}
 
 	#realpython {
-		padding-top: 10px;
+	}
+
+	.logo {
+		color: black;
 	}
 </style>
