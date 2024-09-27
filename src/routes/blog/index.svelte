@@ -1,5 +1,5 @@
-<script context="module">
-	export const load = async ({ fetch }) => {
+<script context="module" lang="ts">
+	export const load = async ({ fetch }: { fetch: any }) => {
 		const posts = await fetch('/api/posts.json');
 		const allPosts = await posts.json();
 
@@ -11,10 +11,10 @@
 	};
 </script>
 
-<script>
+<script lang="ts">
 	export let posts;
 
-	function formatDate(dateString) {
+	function formatDate(dateString: string) {
 		return new Intl.DateTimeFormat('en-UK').format(new Date(dateString));
 	}
 </script>
