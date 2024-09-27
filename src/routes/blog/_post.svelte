@@ -18,8 +18,6 @@
 	<p><i>{formatDate(date)}</i></p>
 
 	<slot />
-	<h2 />
-	<h3 />
 </article>
 
 <style>
