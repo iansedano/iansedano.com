@@ -8,23 +8,11 @@
 --code: #f06292; */
 
 :root {
-	--code-font-size: 0.9rem;
-}
-
-@font-face {
-	font-family: CascadiaCode;
-	src: url('$lib/fonts/CascadiaMono.woff2') format('woff2');
-	font-weight: 400;
-}
-
-@font-face {
-	font-family: CascadiaCode;
-	src: url('$lib/fonts/CascadiaMonoItalic.woff2') format('woff2');
-	font-style: italic;
+	--code-font-size: 1rem;
 }
 
 code {
-	font-family: CascadiaCode, Menlo, Monaco, 'Courier New', monospace;
+	font-family: var(--mono-font);
 }
 
 code {
@@ -46,6 +34,7 @@ pre[class*='language-'] {
 	font-size: var(--code-font-size);
 	color: #76d9e6;
 	text-shadow: none;
+	scrollbar-width: thin;
 }
 
 pre > code[class*='language-'] {
@@ -59,7 +48,7 @@ pre[class*='language-'],
 
 pre[class*='language-'] {
 	padding: 15px;
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 	border: 1px solid #e1e1e8;
 	overflow: auto;
 	position: relative;
